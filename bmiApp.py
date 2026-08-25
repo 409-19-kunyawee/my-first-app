@@ -3,8 +3,8 @@ import streamlit as st
 st.markdown("# :red[คำนวนค่าด้ชนีมวลกาย BMI]")
 st.write("กรอกข้อมูลน้ำหนักและส่วนสูงของคุณ เพื่อเช็คสุขภาพเบื่องต้น")
 
-weight = st.number_input("กรอกน้ำหนักของคุณ (กิโลกรัม):",min_value=1.0, value=1.0)
-height_cm = st.number_input("กรอกส่วนสูงของคุณ (เซนติเมตร):",min_value=1.0, value=1.0)
+weight = st.number_input("กรอกน้ำหนักของคุณ (กิโลกรัม):", min_value=1.0, value=1.0)
+height_cm = st.number_input("กรอกส่วนสูงของคุณ (เซนติเมตร):", min_value=1.0, value=1.0)
 
 if st.button("คำนวนค่า BMI"):
     # แปลงส่วนสูงจาก cm เป็น เมตร แล้วคำนวณ BMI
@@ -19,7 +19,7 @@ if st.button("คำนวนค่า BMI"):
   elif 18.5 <= bmi < 23.0:
       st.success("คุณมีน้ำหนักอยู่ในเกณฑ์ปกติ (สุขภาพดี)")
   elif 23.0 <= bmi < 25.0:
-      st.success("คุณเริ่มมีน้ำหนักเกินเกณฑ์ (ท้วม)")
+      st.info("คุณเริ่มมีน้ำหนักเกินเกณฑ์ (ท้วม)")
   else:
       st.error("คุณอยู่ในเกณฑ์อ้วน ควรระวังเรื่องสุขภาพและออกกำลังกาย")
 
