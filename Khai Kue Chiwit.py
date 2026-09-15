@@ -1,5 +1,5 @@
 import streamlit as st
-st.title("🍳 Khai Kue Chiwit 🍴(Eggs are life)")
+st.title("🍳 Khai Kue Chiwit 🍴")
 
 
 st.divider()
