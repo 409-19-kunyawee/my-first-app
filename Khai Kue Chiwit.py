@@ -13,7 +13,7 @@ with st.container(border=True):
 with st.container(border=True):
     st.subheader("ส่วนลดของทางร้าน")
     st.write("- ซื้อครบ 300 บาท ลด 10%")
-    st.write("- ซื้อทั้ง 4 เมนู ลดเพิ่มอีก 34 บาท")
+    st.write("- ซื้อครบ 500 บาท ลด 20% ")
     
 st.divider()
 st.title("ระบบเลือกรายการและคำนวณเงิน")
