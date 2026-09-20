@@ -1,57 +1,22 @@
 import streamlit as st
 
-# 1. สมมติข้อมูลยอดรวมสินค้าก่อนหน้า (แทนค่าด้วยตัวแปรจากระบบของคุณได้เลย)
-st.title("🛒 ระบบคำนวณส่วนลด")
-total_amount = st.number_input("ยอดรวมสินค้า (บาท)", min_value=0.0, value=500.0, step=50.0)
+st.title("ระบบคำนวณส่วนลดสินค้า")
 
-st.divider()
+# รับค่ายอดซื้อจากผู้ใช้
+total_price = st.number_input("กรอกยอดซื้อรวม (บาท):", min_value=0.0, step=100.0)
 
-# 2. สร้างตัวเลือกโค้ดส่วนลด
-st.subheader("🎟️ เลือกส่วนลดของคุณ")
-discount_option = st.selectbox(
-    "เลือกโปรโมชั่นที่ต้องการใช้:",
-    ["ไม่ใช้ส่วนลด", "ลด 50 บาท (ขั้นต่ำ 300 บาท)", "ลด 150 บาท (ขั้นต่ำ 1,000 บาท)", "ลด 10% (ขั้นต่ำ 500 บาท)"]
-)
+# กำหนดเงื่อนไขยอดซื้อขั้นต่ำ เช่น ต้อง 1,000 บาทขึ้นไปจึงจะใช้ส่วนลดได้
+min_amount_for_discount = 1000.0
 
-# 3. กำหนดเงื่อนไขของแต่ละส่วนลด
-discount_amount = 0.0
-is_eligible = True
-error_message = ""
-
-if discount_option == "ลด 50 บาท (ขั้นต่ำ 300 บาท)":
-    if total_amount >= 300:
-        discount_amount = 50.0
-    else:
-        is_eligible = False
-        error_message = f"❌ ยอดซื้อไม่ครบเงื่อนไข (ขาดอีก {300 - total_amount:.2f} บาท)"
-
-elif discount_option == "ลด 150 บาท (ขั้นต่ำ 1,000 บาท)":
-    if total_amount >= 1000:
-        discount_amount = 150.0
-    else:
-        is_eligible = False
-        error_message = f"❌ ยอดซื้อไม่ครบเงื่อนไข (ขาดอีก {1000 - total_amount:.2f} บาท)"
-
-elif discount_option == "ลด 10% (ขั้นต่ำ 500 บาท)":
-    if total_amount >= 500:
-        discount_amount = total_amount * 0.10
-    else:
-        is_eligible = False
-        error_message = f"❌ ยอดซื้อไม่ครบเงื่อนไข (ขาดอีก {500 - total_amount:.2f} บาท)"
-
-# 4. แสดงผลลัพธ์ตามเงื่อนไข
-if not is_eligible:
-    # หากไม่ผ่านเงื่อนไขขั้นต่ำ ให้แจ้งเตือนและเซ็ตส่วนลดเป็น 0
-    st.error(error_message)
-    discount_amount = 0.0
-elif discount_option != "ไม่ใช้ส่วนลด":
-    st.success(True and f"🎉 ประยุกต์ใช้ส่วนลดสำเร็จ! ลดไป {discount_amount:.2f} บาท")
-
-# 5. คำนวณยอดสุทธิที่ต้องจ่าย
-final_amount = total_amount - discount_amount
-
-st.divider()
-st.subheader("📊 สรุปยอดใบเสร็จ")
-st.write(f"ยอดรวมสินค้า: *{total_amount:,.2f}* บาท")
-st.write(f"ส่วนลด: *-{discount_amount:,.2f}* บาท")
-st.markdown(f"### ยอดเงินสุทธิ: :green[{final_amount:,.2f}] บาท")
+if total_price < min_amount_for_discount:
+    st.warning(f"ยอดซื้อยังไม่ถึง {min_amount_for_discount:,.0f} บาท ไม่สามารถใช้ส่วนลดได้")
+    net_price = total_price
+    st.write(f"*ยอดชำระสุทธิ:* {net_price:,.2f} บาท")
+else:
+    # เงื่อนไขเมื่อถึงยอดขั้นต่ำ (เช่น ลด 10%)
+    discount = total_price * 0.10
+    net_price = total_price - discount
+    
+    st.success("ยินดีด้วย! คุณได้รับส่วนลด 10%")
+    st.write(f"ส่วนลด: {discount:,.2f} บาท")
+    st.write(f"*ยอดชำระสุทธิหลังหักส่วนลด:* {net_price:,.2f} บาท")
