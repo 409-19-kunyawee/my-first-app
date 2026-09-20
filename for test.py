@@ -1,46 +1,49 @@
 import streamlit as st
 
-st.title("ระบบเลือกรายการและคำนวณเงิน")
+st.title("💰 ระบบคำนวณส่วนลดสินค้าใน Streamlit")
 
-# กำหนดราคาสินค้า/บริการตั้งต้น
-menu_prices = {
-    "1. ค่าบริการแพ็กเกจ A": 500,
-    "2. ค่าบริการแพ็กเกจ B": 1200,
-    "3. ค่าอุปกรณ์เสริม": 300,
-}
+# 1. รับค่าราคาสินค้าเริ่มต้น
+price = st.number_input("กรอกราคาสินค้าตั้งต้น (บาท):", min_value=0.0, value=1000.0, step=100.0)
 
-# ใช้ st.session_state เพื่อเก็บบันทึกรายการที่เลือกเพิ่มได้หลายครั้ง
-if "selected_items" not in st.session_state:
-    st.session_state.selected_items = []
+# 2. เลือกประเภทของส่วนลด
+discount_type = st.selectbox(
+    "เลือกประเภทส่วนลด:",
+    ["ไม่มีส่วนลด", "ลดเป็นเปอร์เซ็นต์ (%)", "ลดเป็นจำนวนเงิน (บาท)", "ใช้โค้ดส่วนลด (Promo Code)"]
+)
 
-# ฟังก์ชันเพิ่มรายการ
-def add_item():
-    item = st.session_state.new_item
-    price = menu_prices[item]
-    st.session_state.selected_items.append({"item": item, "price": price})
+discount_amount = 0.0
+promo_code = ""
 
-# ฟังก์ชันล้างข้อมูล
-def clear_all():
-    st.session_state.selected_items = []
+# 3. เงื่อนไขตามประเภทส่วนลดที่เลือก
+if discount_type == "ลดเป็นเปอร์เซ็นต์ (%)":
+    percent = st.slider("ระบุเปอร์เซ็นต์ส่วนลด:", min_value=0, max_value=100, value=10)
+    discount_amount = price * (percent / 100)
 
-# ส่วนเลือกรายการ (เลือกซ้ำได้โดยการกดเพิ่มทีละครั้ง)
-st.selectbox("เลือกรายการที่ต้องการ (เลือกซ้ำได้)", list(menu_prices.keys()), key="new_item")
-st.button("➕ เพิ่มรายการนี้", on_click=add_item)
+elif discount_type == "ลดเป็นจำนวนเงิน (บาท)":
+    discount_amount = st.number_input("ระบุจำนวนเงินส่วนลด (บาท):", min_value=0.0, max_value=price, value=100.0)
 
-st.divider()
+elif discount_type == "ใช้โค้ดส่วนลด (Promo Code)":
+    promo_code = st.text_input("กรอกโค้ดส่วนลดของคุณ:").strip().upper()
+    # กำหนดโค้ดตัวอย่าง เช่น SAVE20 ลด 20%, SALE500 ลด 500 บาท
+    if promo_code == "SAVE20":
+        discount_amount = price * 0.20
+        st.success("ใช้โค้ด SAVE20 สำเร็จ! (ลด 20%)")
+    elif promo_code == "SALE500":
+        discount_amount = 500.0
+        st.success("ใช้โค้ด SALE500 สำเร็จ! (ลด 500 บาท)")
+    elif promo_code != "":
+        st.error("โค้ดส่วนลดไม่ถูกต้องหรือหมดอายุ")
 
-# แสดงรายการที่เลือกทั้งหมด
-st.subheader("📋 รายการที่คุณเลือก:")
-if st.session_state.selected_items:
-    total_price = 0
-    for i, entry in enumerate(st.session_state.selected_items):
-        col1, col2 = st.columns([3, 1])
-        col1.write(f"{i+1}. {entry['item']}")
-        col2.write(f"{entry['price']:,.2f} บาท")
-        total_price += entry['price']
-    
-    st.divider()
-    st.markdown(h2 := f"### *ยอดรวมทั้งหมด: {total_price:,.2f} บาท*")
-    st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all)
-else:
-    st.info("ยังไม่มีรายการถูกเลือก กรุณากดเพิ่มรายการด้านบน")
+# 4. คำนวณราคาสุทธิ
+# ป้องกันส่วนลดมากกว่าราคาสินค้า
+if discount_amount > price:
+    discount_amount = price
+
+final_price = price - discount_amount
+
+# 5. แสดงผลลัพธ์
+st.markdown("---")
+st.subheader("📋 สรุปรายการคำนวณ")
+st.write(f"*ราคาก่อนหักส่วนลด:* {price:,.2f} บาท")
+st.write(f"*ส่วนลด 100% / หักออก:* -{discount_amount:,.2f} บาท")
+st.markdown(f"### *ราคาสุทธิที่ต้องชำระ:* :green[{final_price:,.2f}] บาท")
