@@ -118,7 +118,5 @@ if st.session_state.selected_items:
 
 else:
     st.info("🛒 ยังไม่มีรายการสินค้าในบิล กรุณาเลือกรายการและกด 'เพิ่มรายการนี้'")
-    import streamlit as st
-
-# ใส่ URL ของรูปภาพลงใน st.image()
-st.image("https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500", caption="เมนูไข่กระทะสุดอร่อย", use_container_width=1.5*1.5)
+ # กำหนดความกว้าง (width) ได้ละเอียดตามใจชอบ เช่น 50px หรือแม้แต่ 10px
+st.markdown('<img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200" width="50">', unsafe_allow_html=True)
