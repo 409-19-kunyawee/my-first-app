@@ -121,4 +121,4 @@ else:
     import streamlit as st
 
 # ใส่ URL ของรูปภาพลงใน st.image()
-st.image("https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500", caption="เมนูไข่กระทะสุดอร่อย", use_container_width=80*80)
+st.image("https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500", caption="เมนูไข่กระทะสุดอร่อย", use_container_width=10*10)
