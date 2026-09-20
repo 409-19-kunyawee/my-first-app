@@ -4,10 +4,10 @@ st.markdown("# :orange[🍳 Khai Kue Chiwit 🍴]")
 st.divider()
 with st.container(border=True):
     st.subheader("📦 เมนูคนชอบข่าย")
-    st.write("- เครปไข่เจียว         ราคา 35 บาท")
-    st.write("- ซุปไข่ข้นมะเขือเทศ    ราคา 40 บาท")
-    st.write("- ไข่ตุ๋นหมูเด้ง         ราคา 40 บาท")
-    st.write("- ไข่ลูกเขยระเบิด       ราคา 39 บาท")
+    st.write("- เครปไข่เจียว         ราคา 40 บาท")
+    st.write("- ซุปไข่ข้นมะเขือเทศ    ราคา 50 บาท")
+    st.write("- ไข่ตุ๋นหมูเด้ง         ราคา 55 บาท")
+    st.write("- ไข่ลูกเขยระเบิด       ราคา 45 บาท")
 
 
 with st.container(border=True):
