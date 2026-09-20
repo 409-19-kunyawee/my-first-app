@@ -1,49 +1,35 @@
 import streamlit as st
 
-st.title("💰 ระบบคำนวณส่วนลดสินค้าใน Streamlit")
+st.title("ระบบคำนวณส่วนลดอัตโนมัติ")
 
-# 1. รับค่าราคาสินค้าเริ่มต้น
-price = st.number_input("กรอกราคาสินค้าตั้งต้น (บาท):", min_value=0.0, value=1000.0, step=100.0)
+# 1. รับค่าราคาสินค้าตั้งต้น
+price = st.number_input("กรอกราคาสินค้า (บาท):", min_value=0.0, value=1000.0, step=100.0)
 
-# 2. เลือกประเภทของส่วนลด
-discount_type = st.selectbox(
-    "เลือกประเภทส่วนลด:",
-    ["ไม่มีส่วนลด", "ลดเป็นเปอร์เซ็นต์ (%)", "ลดเป็นจำนวนเงิน (บาท)", "ใช้โค้ดส่วนลด (Promo Code)"]
+# 2. ตัวเลือกประเภทสมาชิก
+member_type = st.selectbox(
+    "เลือกประเภทสมาชิก:",
+    ["General (ทั่วไป)", "Silver (สมาชิกซิลเวอร์)", "Gold (สมาชิกโกลด์)", "VIP (วีไอพี)"]
 )
 
-discount_amount = 0.0
-promo_code = ""
+# 3. เงื่อนไขส่วนลดอัตโนมัติ (If-Else Condition)
+discount_rate = 0.0
 
-# 3. เงื่อนไขตามประเภทส่วนลดที่เลือก
-if discount_type == "ลดเป็นเปอร์เซ็นต์ (%)":
-    percent = st.slider("ระบุเปอร์เซ็นต์ส่วนลด:", min_value=0, max_value=100, value=10)
-    discount_amount = price * (percent / 100)
+if member_type == "Silver (สมาชิกซิลเวอร์)":
+    discount_rate = 0.05  # ส่วนลด 5%
+elif member_type == "Gold (สมาชิกโกลด์)":
+    discount_rate = 0.10  # ส่วนลด 10%
+elif member_type == "VIP (วีไอพี)":
+    discount_rate = 0.20  # ส่วนลด 20%
+else:
+    discount_rate = 0.00  # ไม่มีส่วนลด
 
-elif discount_type == "ลดเป็นจำนวนเงิน (บาท)":
-    discount_amount = st.number_input("ระบุจำนวนเงินส่วนลด (บาท):", min_value=0.0, max_value=price, value=100.0)
-
-elif discount_type == "ใช้โค้ดส่วนลด (Promo Code)":
-    promo_code = st.text_input("กรอกโค้ดส่วนลดของคุณ:").strip().upper()
-    # กำหนดโค้ดตัวอย่าง เช่น SAVE20 ลด 20%, SALE500 ลด 500 บาท
-    if promo_code == "SAVE20":
-        discount_amount = price * 0.20
-        st.success("ใช้โค้ด SAVE20 สำเร็จ! (ลด 20%)")
-    elif promo_code == "SALE500":
-        discount_amount = 500.0
-        st.success("ใช้โค้ด SALE500 สำเร็จ! (ลด 500 บาท)")
-    elif promo_code != "":
-        st.error("โค้ดส่วนลดไม่ถูกต้องหรือหมดอายุ")
-
-# 4. คำนวณราคาสุทธิ
-# ป้องกันส่วนลดมากกว่าราคาสินค้า
-if discount_amount > price:
-    discount_amount = price
-
+# 4. คำนวณราคาหลังหักส่วนลด
+discount_amount = price * discount_rate
 final_price = price - discount_amount
 
-# 5. แสดงผลลัพธ์
-st.markdown("---")
-st.subheader("📋 สรุปรายการคำนวณ")
-st.write(f"*ราคาก่อนหักส่วนลด:* {price:,.2f} บาท")
-st.write(f"*ส่วนลด 100% / หักออก:* -{discount_amount:,.2f} บาท")
-st.markdown(f"### *ราคาสุทธิที่ต้องชำระ:* :green[{final_price:,.2f}] บาท")
+# 5. แสดงผลลัพธ์แบบอัตโนมัติ
+st.divider()
+st.subheader("สรุปยอดชำระเงิน")
+st.write(f"ราคาตั้งต้น: *{price:,.2f} บาท*")
+st.write(f"ได้รับส่วนลด ({int(discount_rate * 100)}%): *-{discount_amount:,.2f} บาท*")
+st.success(f"ยอดเงินที่ต้องชำระสุทธิ: *{final_price:,.2f} บาท*")
