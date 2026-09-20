@@ -85,7 +85,6 @@ if st.session_state.selected_items:
         st.write(f"{idx}. {item['item']}")
     
     st.divider()
-
     # 4. แสดงผลสรุปยอดเงิน
     col1, col2, col3 = st.columns(3)
     col1.metric("ราคารวม", f"{subtotal:,.2f} บาท")
