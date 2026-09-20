@@ -86,8 +86,7 @@ if st.session_state.selected_items:
     st.divider()
 
     # 4. แสดงผลสรุปยอดเงิน
-    col1, 
-    col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
     col1.metric("ราคารวม", f"{subtotal:,.2f} บาท")
     col2.metric("ส่วนลด", f"{discount_percent}% (-{discount_amount:,.2f} บาท)")
     col3.metric("ยอดรวมสุทธิ", f"{total_price:,.2f} บาท")
