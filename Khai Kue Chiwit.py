@@ -16,40 +16,48 @@ with st.container(border=True):
     st.write("- ซื้อทั้ง 4 เมนู ลดเพิ่มอีก 34 บาท")
     
 st.divider()
-# 1. กำหนดหัวข้อเว็บ
-st.title("ระบบคำนวณราคาสินค้าอัจฉริยะ 🛒")
+st.title("ระบบเลือกรายการและคำนวณเงิน")
 
-# 2. สร้างฐานข้อมูลรายการสินค้าและราคา (Dictionary)
-menu_items = {
+# กำหนดราคาสินค้า/บริการตั้งต้น
+menu_prices = {
     "เครปไข่เจียว": 35,
     "ซุปไข่ข้นมะเขือเทศ": 40,
-    "ไข่ตุ๋นหมูเด้ง": 40,
+    "ไข่ตุ๋นเนื้อหมูเด้ง": 40,
     "ไข่ลูกเขยระเบิด": 39,
 }
 
-# 3. สร้างช่องเลือกหลายตัวเลือก (Multiselect)
-selected_items = st.multiselect(
-    label="เลือกรายการสินค้าที่คุณต้องการซื้อ:",
-    options=list(menu_items.keys()),
-    default=None,
-    placeholder="คลิกเพื่อเลือกสินค้า..."
-)
+# ใช้ st.session_state เพื่อเก็บบันทึกรายการที่เลือกเพิ่มได้หลายครั้ง
+if "selected_items" not in st.session_state:
+    st.session_state.selected_items = []
 
-# 4. ส่วนการคำนวณเงิน
-if selected_items:
-    st.write("---")
-    st.subheader("📋 รายการที่คุณเลือก:")
-    
+# ฟังก์ชันเพิ่มรายการ
+def add_item():
+    item = st.session_state.new_item
+    price = menu_prices[item]
+    st.session_state.selected_items.append({"item": item, "price": price})
+
+# ฟังก์ชันล้างข้อมูล
+def clear_all():
+    st.session_state.selected_items = []
+
+# ส่วนเลือกรายการ (เลือกซ้ำได้โดยการกดเพิ่มทีละครั้ง)
+st.selectbox("เลือกรายการที่ต้องการ (เลือกซ้ำได้)", list(menu_prices.keys()), key="new_item")
+st.button("➕ เพิ่มรายการนี้", on_click=add_item)
+
+st.divider()
+
+# แสดงรายการที่เลือกทั้งหมด
+st.subheader("📋 รายการที่คุณเลือก:")
+if st.session_state.selected_items:
     total_price = 0
+    for i, entry in enumerate(st.session_state.selected_items):
+        col1, col2 = st.columns([3, 1])
+        col1.write(f"{i+1}. {entry['item']}")
+        col2.write(f"{entry['price']:,.2f} บาท")
+        total_price += entry['price']
     
-    # วนลูปแสดงรายการที่เลือกพร้อมราคา และบวกราคารวม
-    for item in selected_items:
-        price = menu_items[item]
-        total_price += price
-        st.write(f"- {item}: *{price} บาท*")
-        
-    st.write("---")
-    # แสดงราคารวมทั้งหมดด้วยตัวหนาและขนาดใหญ่
-    st.markdown(f"### 💰 ราคารวมทั้งหมด: {total_price:,} บาท")
+    st.divider()
+    st.markdown(h2 := f"### *ยอดรวมทั้งหมด: {total_price:,.2f} บาท*")
+    st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all)
 else:
-    st.info("กรุณาเลือกสินค้าอย่างน้อย 1 รายการเพื่อคำนวณเงิน")
+    st.info("ยังไม่มีรายการถูกเลือก กรุณากดเพิ่มรายการด้านบน")
