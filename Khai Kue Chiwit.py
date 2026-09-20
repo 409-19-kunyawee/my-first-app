@@ -75,6 +75,7 @@ if total_price < min_amount_for_discount:
     st.warning(f"ยอดซื้อยังไม่ถึง {min_amount_for_discount:,.0f} บาท ไม่สามารถใช้ส่วนลดได้")
     net_price = total_price
     st.write(f"*ยอดชำระสุทธิ:* {net_price:,.2f} บาท")
+    
 else:
     # เงื่อนไขเมื่อถึงยอดขั้นต่ำ (เช่น ลด 20%)
     discount = total_price * 0.20
