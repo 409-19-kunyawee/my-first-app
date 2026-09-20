@@ -63,23 +63,45 @@ else:
     st.info("ยังไม่มีรายการถูกเลือก กรุณากดเพิ่มรายการด้านบน")
 
 st.divider()
-st.title("ระบบคำนวณส่วนลดสินค้า")
+st.subheader("🛒 สรุปรายการสั่งซื้อ")
 
-# รับค่ายอดซื้อจากผู้ใช้
-total_price = st.number_input("กรอกยอดซื้อรวม (บาท):", min_value=0.0, step=100.0)
+# ตรวจสอบว่ามีการเลือกสินค้าหรือยัง
+if st.session_state.selected_items:
+    # 1. คำนวณราคารวมก่อนหักส่วนลด (Subtotal)
+    subtotal = sum(item["price"] for item in st.session_state.selected_items)
+    
+    # 2. คำนวณส่วนลดตามเงื่อนไข
+    discount_percent = 0
+    if subtotal >= 500:
+        discount_percent = 20
+    elif subtotal >= 300:
+        discount_percent = 10
+        
+    discount_amount = subtotal * (discount_percent / 100)
+    total_price = subtotal - discount_amount
 
-# กำหนดเงื่อนไขยอดซื้อขั้นต่ำ เช่น ต้อง 300 บาทขึ้นไปจึงจะใช้ส่วนลดได้
-min_amount_for_discount = 300.0
+    # 3. แสดงรายการสินค้าที่เลือกไว้
+    for idx, item in enumerate(st.session_state.selected_items, 1):
+        st.write(f"{idx}. {item['item']}")
+    
+    st.divider()
 
-if total_price < min_amount_for_discount:
-    st.warning(f"ยอดซื้อยังไม่ถึง {min_amount_for_discount:,.0f} บาท ไม่สามารถใช้ส่วนลดได้")
-    net_price = total_price
-    st.write(f"*ยอดชำระสุทธิ:* {net_price:,.2f} บาท")
+    # 4. แสดงผลสรุปยอดเงิน
+    col1, col2, col3 = st.columns(3)
+    col1.metric("ราคารวม", f"{subtotal:,.2f} บาท")
+    col2.metric("ส่วนลด", f"{discount_percent}% (-{discount_amount:,.2f} บาท)")
+    col3.metric("ยอดรวมสุทธิ", f"{total_price:,.2f} บาท")
+
+    # แจ้งเตือนสิทธิประโยชน์ส่วนลด
+    if subtotal < 300:
+        st.info(f"💡 ซื้อเพิ่มอีก {300 - subtotal:,.2f} บาท เพื่อรับส่วนลด 10%")
+    elif subtotal < 500:
+        st.info(f"🎉 คุณได้รับส่วนลด 10%! (ซื้อเพิ่มอีก {500 - subtotal:,.2f} บาท เพื่อรับส่วนลด 20%)")
+    else:
+        st.success("🔥 คุณได้รับส่วนลดสูงสุด 20%!")
+
+    # ปุ่มสำหรับล้างรายการทั้งหมด
+    st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all, type="primary")
+
 else:
-    # เงื่อนไขเมื่อถึงยอดขั้นต่ำ (เช่น ลด 10%)
-    discount = total_price * 0.10
-    net_price = total_price - discount
-
-    st.success("ยินดีด้วย! คุณได้รับส่วนลด 10%")
-    st.write(f"ส่วนลด: {discount:,.2f} บาท")
-    st.write(f"*ยอดชำระสุทธิหลังหักส่วนลด:* {net_price:,.2f} บาท")
+    st.info("ยังไม่มีรายการที่เลือก กรุณาเลือกสินค้าแล้วกด 'เพิ่มรายการนี้'")t_price:,.2f} บาท")
