@@ -57,7 +57,7 @@ def get_image(url):
 
         # ทำให้ทุกภาพเป็นขนาด 600 x 400
         image = image.convert("RGB")
-        image.thumbnail((200, 200))
+        image.thumbnail((300, 500))
 
         return image
 
