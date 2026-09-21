@@ -1,39 +1,58 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageOps
 import requests
 from io import BytesIO
 
-# ==========================================
+# =========================
 # ตั้งค่าหน้าเว็บ
-# ==========================================
+# =========================
 st.set_page_config(
-    page_title="My Gallery",
+    page_title="My Food Gallery",
     layout="wide"
 )
 
-st.title("My Gallery")
+st.title("🍽️ My Food Gallery")
 
 
-# ==========================================
-# 🟢 โซนเปลี่ยนชื่อ
-# ==========================================
+# =========================
+# ✏️ แก้ชื่ออาหารตรงนี้
+# =========================
 names = [
-    "ลาบแซลมอน 
-    99 บาท",
-    "ชื่อที่ 2",
-    "ชื่อที่ 3",
-    "ชื่อที่ 4",
-    "ชื่อที่ 5",
-    "ชื่อที่ 6",
-    "ชื่อที่ 7",
-    "ชื่อที่ 8",
-    "ชื่อที่ 9"
+    "ลาบแซลมอน",
+    "ซูชิข้าวคลุกกะปิไข่ชะอม",
+    "พิซซ่าหน้ากะเพรา",
+    "เกี๊ยวซ่ากุ้งผัดไทย",
+    "สปาเกตตี้ผัดต้มยำกุ้ง",
+    "มักกะโรนี",
+    "ชื่ออาหาร 7",
+    "ชื่ออาหาร 8",
+    "ชื่ออาหาร 9",
+    "ชื่ออาหาร 10"
 ]
 
 
-# ==========================================
-# 🔵 โซนเปลี่ยนลิงก์รูป
-# ==========================================
+# =========================
+# 💰 แก้ราคาตรงนี้
+# =========================
+prices = [
+    "99 บาท",
+    "69 บาท",
+    "129 บาท",
+    "89 บาท",
+    "109 บาท",
+    "99 บาท",
+    "79 บาท",
+    "89 บาท",
+    "69 บาท",
+    "99 บาท"
+]
+
+
+# =========================
+# 🖼️ ใส่ลิงก์รูปตรงนี้
+# ต้องเป็น Direct Image URL
+# เช่น .jpg / .png / .webp
+# =========================
 images = [
     "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
     "ใส่ลิงก์รูปที่ 2",
@@ -43,22 +62,28 @@ images = [
     "ใส่ลิงก์รูปที่ 6",
     "ใส่ลิงก์รูปที่ 7",
     "ใส่ลิงก์รูปที่ 8",
-    "ใส่ลิงก์รูปที่ 9"
+    "ใส่ลิงก์รูปที่ 9",
+    "ใส่ลิงก์รูปที่ 10"
 ]
 
 
-# ==========================================
-# ฟังก์ชันทำให้รูปทุกภาพขนาดเท่ากัน
-# ==========================================
+# =========================
+# ฟังก์ชันโหลดรูป
+# =========================
 def get_image(url):
-
     try:
         response = requests.get(url, timeout=10)
-        image = Image.open(BytesIO(response.content))
+        response.raise_for_status()
 
-        # ทำให้ทุกภาพเป็นขนาด 600 x 400
-        image = image.convert("RGB")
-        image.thumbnail((600, 400))
+        image = Image.open(
+            BytesIO(response.content)
+        ).convert("RGB")
+
+        # ทำให้รูปทุกใบมีขนาดเท่ากัน
+        image = ImageOps.fit(
+            image,
+            (180, 180)
+        )
 
         return image
 
@@ -66,34 +91,72 @@ def get_image(url):
         return None
 
 
-# ==========================================
-# แสดง Gallery 3 x 3
-# ==========================================
-
-for row in range(2):
+# =========================
+# แสดงอาหาร 5 คอลัมน์
+# =========================
+for row in range(0, len(images), 5):
 
     columns = st.columns(5)
 
     for col, i in zip(
         columns,
-        range(row * 5, min(row * 5 + 5, len(images)))
+        range(row, min(row + 5, len(images)))
     ):
 
         with col:
 
-            # กรอบรูป
+            # รูปอาหาร
             image = get_image(images[i])
 
             if image is not None:
                 st.image(
                     image,
-                    width="stretch"
+                    width=180
                 )
             else:
-                st.info("ใส่ลิงก์รูปตรงนี้")
+                st.markdown(
+                    """
+                    <div style="
+                        width:180px;
+                        height:180px;
+                        border:1px solid #ddd;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        margin:auto;
+                        color:#999;
+                    ">
+                        ใส่รูปตรงนี้
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-            # ชื่อ
+            # ชื่ออาหาร
             st.markdown(
-                f"<h3 style='text-align:center;'>{names[i]}</h3>",
+                f"""
+                <div style="
+                    text-align:center;
+                    font-size:16px;
+                    font-weight:bold;
+                    margin-top:8px;
+                ">
+                    {names[i]}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            # ราคา
+            st.markdown(
+                f"""
+                <div style="
+                    text-align:center;
+                    font-size:15px;
+                    margin-top:4px;
+                ">
+                    {prices[i]}
+                </div>
+                """,
                 unsafe_allow_html=True
             )
