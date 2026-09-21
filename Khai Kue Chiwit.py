@@ -5,7 +5,8 @@ from io import BytesIO
 from collections import Counter
 from datetime import datetime
 
-st.markdown("# :blue[🍳 Khai Kue Chiwit 🍴]")
+st.markdown("# :red[ร้านนี้อร่อยทุกอย่าง]")
+st.write("เชิญคุณลูกค้าเลือกดูเมนูและทำการสั่งผ่านระบบด้านล่าง")
 
 # =========================
 # ตั้งค่าหน้าเว็บ
