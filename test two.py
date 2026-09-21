@@ -1,8 +1,11 @@
 import streamlit as st
+from PIL import Image
+import requests
+from io import BytesIO
 
-# ==============================
+# ==========================================
 # ตั้งค่าหน้าเว็บ
-# ==============================
+# ==========================================
 st.set_page_config(
     page_title="My Gallery",
     layout="wide"
@@ -11,11 +14,11 @@ st.set_page_config(
 st.title("My Gallery")
 
 
-# ==================================================
+# ==========================================
 # 🟢 โซนเปลี่ยนชื่อ
-# ==================================================
+# ==========================================
 names = [
-    "ลาบแซลมอน 99 บาท",
+    "ชื่อที่ 1",
     "ชื่อที่ 2",
     "ชื่อที่ 3",
     "ชื่อที่ 4",
@@ -27,9 +30,9 @@ names = [
 ]
 
 
-# ==================================================
+# ==========================================
 # 🔵 โซนเปลี่ยนลิงก์รูป
-# ==================================================
+# ==========================================
 images = [
     "https://apimain.kleensstation.com/images/1695562648.jpg",
     "ใส่ลิงก์รูปที่ 2",
@@ -43,57 +46,55 @@ images = [
 ]
 
 
-# ==================================================
-# แสดง Gallery 3 × 3
-# ==================================================
+# ==========================================
+# ฟังก์ชันทำให้รูปทุกภาพขนาดเท่ากัน
+# ==========================================
+def get_image(url):
+
+    try:
+        response = requests.get(url, timeout=10)
+        image = Image.open(BytesIO(response.content))
+
+        # ทำให้ทุกภาพเป็นขนาด 600 x 400
+        image = image.convert("RGB")
+        image.thumbnail((600, 400))
+
+        return image
+
+    except:
+        return None
+
+
+# ==========================================
+# แสดง Gallery 3 x 3
+# ==========================================
 
 for row in range(3):
 
     col1, col2, col3 = st.columns(3)
 
+    columns = [col1, col2, col3]
+
     for col, i in zip(
-        [col1, col2, col3],
+        columns,
         range(row * 3, row * 3 + 3)
     ):
 
         with col:
 
+            # กรอบรูป
+            image = get_image(images[i])
+
+            if image is not None:
+                st.image(
+                    image,
+                    width="stretch"
+                )
+            else:
+                st.info("ใส่ลิงก์รูปตรงนี้")
+
+            # ชื่อ
             st.markdown(
-                f"""
-                <div style="
-                    border: 1px solid #cccccc;
-                    padding: 10px;
-                    margin: 5px;
-                    text-align: center;
-                    background-color: white;
-                ">
-
-                    <div style="
-                        width: 100%;
-                        height: 200px;
-                        overflow: hidden;
-                    ">
-
-                        <img
-                            src="{images[i]}"
-                            style="
-                                width: 100%;
-                                height: 200px;
-                                object-fit: cover;
-                                display: block;
-                            "
-                        >
-
-                    </div>
-
-                    <h3 style="
-                        margin-top: 12px;
-                        margin-bottom: 5px;
-                    ">
-                        {names[i]}
-                    </h3>
-
-                </div>
-                """,
+                f"<h3 style='text-align:center;'>{names[i]}</h3>",
                 unsafe_allow_html=True
             )
