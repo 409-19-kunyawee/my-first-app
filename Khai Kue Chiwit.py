@@ -5,7 +5,7 @@ from io import BytesIO
 from collections import Counter
 from datetime import datetime
 
-st.markdown("# :blue[ร้านนี้อร่อยทุกอย่าง]")
+st.markdown("# :blue[🍳 Khai Kue Chiwit 🍴]")
 
 # =========================
 # ตั้งค่าหน้าเว็บ
@@ -185,32 +185,8 @@ for row in range(0, len(images), 5):
                 """,
                 unsafe_allow_html=True
             )
-            
-# ส่วนที่ 1: ส่วนหัวและเมนูร้าน
-st.markdown("# :orange[🍳 Khai Kue Chiwit 🍴]")
 
 st.divider()
-with st.container(border=True):
-    st.subheader("📦 เมนูคนชอบข่าย")
-    st.write("- ลาบแซลมอน 99 บาท")
-    st.write("- ซูชิข้าวคลุกกะปิไข่ชะอม 69 บาท")
-    st.write("- พิซซ่าหน้ากะเพรา 129 บาท")
-    st.write("- เกี๊ยวซ่ากุ้งผัดไทย 89 บาท")
-    st.write("- สปาเกตตี้ผัดต้มยำกุ้ง 99 บาท")
-    st.write("- ซูชิข้าวเหนียวไก่ย่างจิ้มแจ่ว 69 บาท")
-    st.write("- เปาะเปี๊ยะส้มตำ 69 บาท ")
-    st.write("- ขนมควยลิง 39 บาท")
-    st.write("- ขนมพระพาย 45 บาท")
-    st.write("- ขนมบุหลันดั้นเมฆ 45 บาท")
-    st.write("- ขนมผการอง 45 บาท")
-    st.write("- ขนมเสน่ห์จันทร์ 45 บาท")
-    st.write("- ซากุระมะนาวโซดา 49 บาท")
-    st.write("- บลูเบอร์รีครัมเบิลโยเกิร์ตดริ๊ง 59 บาท")
-    st.write("- ชาเขียวนม 45 บาท")
-    st.write("- ชาเย็น 45 บาท")
-    st.write("- สตรอว์เบอร์รี่มะม่วงอกร่อง 55 บาท")
-    st.write("- น้ำเปล่า 15 บาท")
-    st.write("- น้ำแข็ง 1 ถัง 10 บาท")
 
 with st.container(border=True):
     st.subheader("ส่วนลดของทางร้าน")
