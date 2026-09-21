@@ -20,7 +20,7 @@ for row in range(3):
         with col:
 
             st.image(
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnvSh5di3ozhklBVpRAU3mzsY5JI8oUTsWWyJ9H8BOXcfaMT8XcFPQeRm-&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3DfCINUb7KYzzGprlJetG5ybzrnuNlKd19R-Tk4x_L7vixURfze0-4Be8&s=10",
     use_container_width=True
             )
 
