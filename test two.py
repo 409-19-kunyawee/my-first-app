@@ -69,15 +69,13 @@ def get_image(url):
 # แสดง Gallery 3 x 3
 # ==========================================
 
-for row in range(3):
+for row in range(2):
 
-    col1, col2, col3 = st.columns(3)
-
-    columns = [col1, col2, col3]
+    columns = st.columns(5)
 
     for col, i in zip(
         columns,
-        range(row * 3, row * 3 + 3)
+        range(row * 5, min(row * 5 + 5, len(images)))
     ):
 
         with col:
