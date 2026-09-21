@@ -3,6 +3,8 @@ from PIL import Image, ImageOps
 import requests
 from io import BytesIO
 
+st.markdown("# :rianbow[ร้านนี้อร่อยทุกอย่าง]")
+
 # =========================
 # ตั้งค่าหน้าเว็บ
 # =========================
