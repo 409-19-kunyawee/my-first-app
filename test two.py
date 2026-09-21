@@ -88,7 +88,7 @@ for row in range(3):
             if image is not None:
                 st.image(
                     image,
-                    width=180
+                    width="stretch"
                 )
             else:
                 st.info("ใส่ลิงก์รูปตรงนี้")
