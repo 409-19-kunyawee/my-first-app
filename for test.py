@@ -127,9 +127,6 @@ if st.session_state.selected_items:
             c3.write(f"{item_total:,.2f} ฿")
 
         st.text("=" * 45)
-
-           if st.button("🧾 ออกใบเสร็จและคำนวณเงิน", type="primary", use_container_width=True):
-        st.session_state.calc = True
         
         # สรุปยอดเงิน
         st.write(f"*รวมเป็นเงิน (Subtotal):* {subtotal:,.2f} บาท")
