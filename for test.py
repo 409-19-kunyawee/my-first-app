@@ -5,8 +5,6 @@ from io import BytesIO
 from collections import Counter
 from datetime import datetime
 
-st.markdown("# :blue[🍳 Khai Kue Chiwit 🍴]")
-
 # =========================
 # ตั้งค่าหน้าเว็บ
 # =========================
@@ -15,6 +13,7 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("# :blue[🍳 Khai Kue Chiwit 🍴]")
 st.title("🍽️ MENU")
 
 
@@ -54,8 +53,6 @@ prices = [
 
 # =========================
 # 🖼️ ใส่ลิงก์รูปตรงนี้
-# ต้องเป็น Direct Image URL
-# เช่น .jpg / .png / .webp
 # =========================
 images = [
     "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
@@ -94,17 +91,16 @@ def get_image(url):
     except:
         return None
 
-st.divider()
 
-# ใช้ expander เพื่อซ่อนเมนู
-with st.expander("📖 **คลิกที่นี่เพื่อดูรายการเมนูทั้งหมด**", expanded=False):
+# =========================
+# ส่วนแสดงเมนูแบบซ่อน/ขยาย (Expander)
+# =========================
+with st.expander("📖 **คลิกที่นี่เพื่อดูรายการเมนูและรูปอาหารทั้งหมด**", expanded=False):
     for row in range(0, len(images), 5):
         columns = st.columns(5)
         for col, i in zip(columns, range(row, min(row + 5, len(images)))):
             with col:
-                # =========================
                 # รูป
-                # =========================
                 image = get_image(images[i])
                 if image is not None:
                     st.markdown(
@@ -125,9 +121,7 @@ with st.expander("📖 **คลิกที่นี่เพื่อดูร�
                         unsafe_allow_html=True
                     )
 
-                # =========================
                 # ชื่ออาหาร & ราคา
-                # =========================
                 st.markdown(
                     f"""
                     <div style="text-align:center; font-size:16px; font-weight:bold; margin-top:8px;">{names[i]}</div>
@@ -135,107 +129,6 @@ with st.expander("📖 **คลิกที่นี่เพื่อดูร�
                     """,
                     unsafe_allow_html=True
                 )
-
-st.divider()
-
-                else:
-                    st.markdown(
-                        """
-                        <div style="width:180px; height:180px; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; margin:auto; color:#999;">
-                            ใส่รูปตรงนี้
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-
-                # =========================
-                # ชื่ออาหาร & ราคา
-                # =========================
-                st.markdown(
-                    f"""
-                    <div style="text-align:center; font-size:16px; font-weight:bold; margin-top:8px;">{names[i]}</div>
-                    <div style="text-align:center; font-size:15px; margin-top:4px; color:#555;">{prices[i]}</div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-st.divider()
-            # =========================
-            # รูป
-            # =========================
-            image = get_image(images[i])
-
-            if image is not None:
-                st.markdown(
-                    f"""
-                    <div style="
-                        display:flex;
-                        justify-content:center;
-                        align-items:center;
-                    ">
-                        <img src="{images[i]}"
-                            style="
-                                width:180px;
-                                height:180px;
-                                object-fit:cover;
-                                display:block;
-                            ">
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-            else:
-                st.markdown(
-                    """
-                    <div style="
-                        width:180px;
-                        height:180px;
-                        border:1px solid #ddd;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        margin:auto;
-                        color:#999;
-                    ">
-                        ใส่รูปตรงนี้
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-            # =========================
-            # ชื่ออาหาร
-            # =========================
-            st.markdown(
-                f"""
-                <div style="
-                    text-align:center;
-                    font-size:16px;
-                    font-weight:bold;
-                    margin-top:8px;
-                ">
-                    {names[i]}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-            # =========================
-            # ราคา
-            # =========================
-            st.markdown(
-                f"""
-                <div style="
-                    text-align:center;
-                    font-size:15px;
-                    margin-top:4px;
-                ">
-                    {prices[i]}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
 
 st.divider()
 
@@ -330,14 +223,13 @@ with col_btn3:
     st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all, use_container_width=True)
 
 # ----------------------------------------------------
-# ส่วนที่เพิ่มเข้ามา: แสดงรายการสินค้าที่เลือกไว้พร้อมจำนวน
+# ส่วนแสดงรายการสินค้าที่เลือกไว้พร้อมจำนวน
 # ----------------------------------------------------
 if st.session_state.selected_items:
     st.markdown("### 🛒 รายการที่สั่งไว้ขณะนี้")
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
     
     with st.container(border=True):
-        # หัวตารางรายการสั่งซื้อ
         head_c1, head_c2, head_c3, head_c4 = st.columns([3, 1.5, 2, 1])
         head_c1.write("**รายการ**")
         head_c2.write("**ราคา/ชิ้น**")
@@ -345,26 +237,25 @@ if st.session_state.selected_items:
         head_c4.write("**จัดการ**")
         st.divider()
 
-        # รายละเอียดแต่ละรายการ
         for item_name, count in item_counts.items():
             unit_price = menu_prices[item_name]
             c1, c2, c3, c4 = st.columns([3, 1.5, 2, 1])
             c1.write(f"• {item_name}")
             c2.write(f"{unit_price} บาท")
             
-            # ปุ่มเพิ่ม-ลดจำนวนในแถวเดียวกัน
             with c3:
                 btn_c1, btn_c2, btn_c3 = st.columns([1, 1.5, 1])
                 btn_c1.button("➖", key=f"dec_{item_name}", on_click=decrement_item, args=(item_name,))
                 btn_c2.write(f"**{count}**")
                 btn_c3.button("➕", key=f"inc_{item_name}", on_click=increment_item, args=(item_name,))
             
-            # ปุ่มลบรายการทั้งหมด
             c4.button("❌", key=f"del_{item_name}", on_click=remove_all_of_item, args=(item_name,))
 
 st.divider()
 
-# ส่วนที่ 2: แสดงผลในรูปแบบใบเสร็จรับเงิน (Receipt Layout)
+# ----------------------------------------------------
+# ส่วนแสดงผลใบเสร็จรับเงิน
+# ----------------------------------------------------
 if st.session_state.show_receipt and st.session_state.selected_items:
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
     subtotal = sum(item["price"] for item in st.session_state.selected_items)
@@ -378,21 +269,18 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     discount_amount = subtotal * (discount_percent / 100)
     total_price = subtotal - discount_amount
 
-    # แสดงผลตัวใบเสร็จ (สไตล์ Receipt Box)
     with st.container(border=True):
         st.markdown("<h3 style='text-align: center;'>🧾 ใบเสร็จรับเงิน / RECEIPT</h3>", unsafe_allow_html=True)
         st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้าน Khai Kue Chiwit</h4>", unsafe_allow_html=True)
         st.caption(f"วันที่-เวลา: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
         st.text("-" * 45)
 
-        # หัวตารางใบเสร็จ
         col1, col2, col3 = st.columns([3, 1, 1.5])
         col1.write("*รายการ*")
         col2.write("*จำนวน*")
         col3.write("*จำนวนเงิน*")
         st.text("-" * 45)
 
-        # รายการสินค้า
         for item_name, count in item_counts.items():
             unit_price = menu_prices[item_name]
             item_total = unit_price * count
@@ -404,7 +292,6 @@ if st.session_state.show_receipt and st.session_state.selected_items:
 
         st.text("=" * 45)
         
-        # สรุปยอดเงิน
         st.write(f"*รวมเป็นเงิน (Subtotal):* {subtotal:,.2f} บาท")
         if discount_percent > 0:
             st.write(f"*ส่วนลด ({discount_percent}%):* -{discount_amount:,.2f} บาท")
@@ -415,7 +302,6 @@ if st.session_state.show_receipt and st.session_state.selected_items:
         st.text("=" * 45)
         st.markdown("<p style='text-align: center;'>🙏 ขอบคุณที่อุดหนุนครับ/ค่ะ 🙏</p>", unsafe_allow_html=True)
 
-    # แสดงคำแนะนำการรับส่วนลดเพิ่มเติม
     if subtotal < 300:
         st.info(f"💡 ซื้อเพิ่มอีก {300 - subtotal:,.2f} บาท เพื่อรับส่วนลด 10%")
     elif subtotal < 500:
