@@ -31,7 +31,7 @@ names = [
 # 🔵 โซนที่ 2 : เปลี่ยนลิงก์รูป
 # ==============================
 images = [
-    "ใส่ลิงก์รูปที่ 1",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29F-T1HQ2s2zmapwl_DbULhFF76I5b9fv-NNEVRsJcZ6ITnTeF5ka8Q8&s=10",
     "ใส่ลิงก์รูปที่ 2",
     "ใส่ลิงก์รูปที่ 3",
     "ใส่ลิงก์รูปที่ 4",
