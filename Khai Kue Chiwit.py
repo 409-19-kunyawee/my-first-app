@@ -5,15 +5,113 @@ from io import BytesIO
 from collections import Counter
 from datetime import datetime
 
-st.markdown("# :red[ร้านนี้อร่อยทุกอย่าง]")
-st.write("เชิญคุณลูกค้าเลือกดูเมนูและทำการสั่งผ่านระบบด้านล่าง")
-
-# =========================
+# =========================================
 # ตั้งค่าหน้าเว็บ
-# =========================
+# =========================================
 st.set_page_config(
     page_title="อาหาร",
     layout="wide"
+)
+
+
+# =========================================
+# 🎀 ชื่อร้าน
+# =========================================
+st.markdown(
+    """
+    <style>
+
+    .shop-title {
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+        color: #b85c5c;
+
+        background-color: #fff5f5;
+
+        padding: 18px 30px;
+
+        border: 2px solid #e8a1a1;
+        border-radius: 20px;
+
+        width: fit-content;
+        margin: 20px auto 10px auto;
+
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .shop-subtitle {
+        text-align: center;
+        font-size: 17px;
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    .menu-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 25px;
+    }
+
+    .food-name {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 8px;
+        color: #333;
+    }
+
+    .food-price {
+        text-align: center;
+        font-size: 15px;
+        margin-top: 4px;
+        color: #555;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================================
+# 🏪 ชื่อร้าน
+# =========================================
+st.markdown(
+    """
+    <div class="shop-title">
+        ✨ ร้านนี้อร่อยทุกอย่าง ✨
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================================
+# คำอธิบายร้าน
+# =========================================
+st.markdown(
+    """
+    <div class="shop-subtitle">
+        เชิญคุณลูกค้าเลือกดูเมนูและทำการสั่งผ่านระบบด้านล่าง
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================================
+# 🍽️ MENU
+# =========================================
+st.markdown(
+    """
+    <div class="menu-title">
+        🍽️ MENU
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
 st.title("🍽️ MENU")
