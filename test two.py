@@ -157,6 +157,34 @@ images = [
     "ใส่ลิงก์รูปที่ 10"
 ]
 
+# =========================
+# ส่วนแสดงเมนูแบบซ่อน/ขยาย (Expander)
+# =========================
+with st.expander("📖 **คลิกที่นี่เพื่อดูรายการเมนูและรูปอาหารทั้งหมด**", expanded=False):
+    for row in range(0, len(images), 5):
+        columns = st.columns(5)
+        for col, i in zip(columns, range(row, min(row + 5, len(images)))):
+            with col:
+                # รูป
+                image = get_image(images[i])
+                if image is not None:
+                    st.markdown(
+                        f"""
+                        <div style="display:flex; justify-content:center; align-items:center;">
+                            <img src="{images[i]}" style="width:180px; height:180px; object-fit:cover; display:block;">
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        """
+                        <div style="width:180px; height:180px; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; margin:auto; color:#999;">
+                            ใส่รูปตรงนี้
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
 # =========================
 # ฟังก์ชันโหลดรูป
