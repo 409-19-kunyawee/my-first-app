@@ -105,14 +105,31 @@ for row in range(0, len(images), 5):
 
         with col:
 
-            # รูปอาหาร
+            # =========================
+            # รูป
+            # =========================
             image = get_image(images[i])
 
             if image is not None:
-                st.image(
-                    image,
-                    width=180
+                st.markdown(
+                    f"""
+                    <div style="
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                    ">
+                        <img src="{images[i]}"
+                            style="
+                                width:180px;
+                                height:180px;
+                                object-fit:cover;
+                                display:block;
+                            ">
+                    </div>
+                    """,
+                    unsafe_allow_html=True
                 )
+
             else:
                 st.markdown(
                     """
@@ -132,7 +149,9 @@ for row in range(0, len(images), 5):
                     unsafe_allow_html=True
                 )
 
+            # =========================
             # ชื่ออาหาร
+            # =========================
             st.markdown(
                 f"""
                 <div style="
@@ -147,7 +166,9 @@ for row in range(0, len(images), 5):
                 unsafe_allow_html=True
             )
 
+            # =========================
             # ราคา
+            # =========================
             st.markdown(
                 f"""
                 <div style="
