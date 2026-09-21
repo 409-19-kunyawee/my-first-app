@@ -7,7 +7,7 @@ from io import BytesIO
 # ตั้งค่าหน้าเว็บ
 # =========================
 st.set_page_config(
-    page_title="My Food Gallery",
+    page_title="MENU",
     layout="wide"
 )
 
