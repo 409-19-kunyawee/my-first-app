@@ -97,9 +97,35 @@ with col_btn2:
 with col_btn3:
     st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all, use_container_width=True)
 
-# สรุปรายการที่เลือกไว้คร่าวๆ ก่อนออกใบเสร็จ
 if st.session_state.selected_items:
-    st.caption(f"🛒 รายการที่เลือกไว้ขณะนี้: {len(st.session_state.selected_items)} ชิ้น")
+    st.markdown("### 🛒 รายการที่สั่งไว้ขณะนี้")
+    item_counts = Counter(item["item"] for item in st.session_state.selected_items)
+    
+    with st.container(border=True):
+        # หัวตารางรายการสั่งซื้อ
+        head_c1, head_c2, head_c3, head_c4 = st.columns([3, 1.5, 2, 1])
+        head_c1.write("*รายการ*")
+        head_c2.write("*ราคา/ชิ้น*")
+        head_c3.write("*จำนวน*")
+        head_c4.write("*จัดการ*")
+        st.divider()
+
+        # รายละเอียดแต่ละรายการ
+        for item_name, count in item_counts.items():
+            unit_price = menu_prices[item_name]
+            c1, c2, c3, c4 = st.columns([3, 1.5, 2, 1])
+            c1.write(f"• {item_name}")
+            c2.write(f"{unit_price} บาท")
+            
+            # ปุ่มเพิ่ม-ลดจำนวนในแถวเดียวกัน
+            with c3:
+                btn_c1, btn_c2, btn_c3 = st.columns([1, 1.5, 1])
+                btn_c1.button("➖", key=f"dec_{item_name}", on_click=decrement_item, args=(item_name,))
+                btn_c2.write(f"*{count}*")
+                btn_c3.button("➕", key=f"inc_{item_name}", on_click=increment_item, args=(item_name,))
+            
+            # ปุ่มลบรายการทั้งหมด
+            c4.button("❌", key=f"del_{item_name}", on_click=remove_all_of_item, args=(item_name,))
 
 st.divider()
 
