@@ -18,25 +18,20 @@ for row in range(3):
         range(row * 3, row * 3 + 3)
     ):
         with col:
+
+            st.image(
+                f"images/photo{i + 1}.jpg",
+                use_container_width=True
+            )
+
             st.markdown(
                 f"""
                 <div style="
                     border: 1px solid black;
-                    padding: 30px;
+                    padding: 10px;
                     margin: 5px;
                     text-align: center;
-                    height: 250px;
                 ">
-                    <div style="
-                        border: 1px solid black;
-                        height: 150px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    ">
-                        PHOTO
-                    </div>
-
                     <h3>{names[i]}</h3>
                 </div>
                 """,
