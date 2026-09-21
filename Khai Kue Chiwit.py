@@ -1,63 +1,183 @@
 import streamlit as st
-st.markdown("# :orange[🍳 Khai Kue Chiwit 🍴]")
+from PIL import Image, ImageOps
+import requests
+from io import BytesIO
 
-st.divider()
-with st.container(border=True):
-    st.subheader("📦 เมนูคนชอบข่าย")
-    st.write("- เครปไข่เจียว         ราคา 35 บาท")
-    st.write("- ซุปไข่ข้นมะเขือเทศ    ราคา 40 บาท")
-    st.write("- ไข่ตุ๋นหมูเด้ง         ราคา 40 บาท")
-    st.write("- ไข่ลูกเขยระเบิด       ราคา 39 บาท")
+# =========================
+# ตั้งค่าหน้าเว็บ
+# =========================
+st.set_page_config(
+    page_title="My Food Gallery",
+    layout="wide"
+)
+
+st.title("🍽️ My Food Gallery")
 
 
-with st.container(border=True):
-    st.subheader("ส่วนลดของทางร้าน")
-    st.write("- ซื้อครบ 300 บาท ลด 10%")
-    st.write("- ซื้อครบ 500 บาท ลด 20% ")
-    
-st.divider()
-st.title("ระบบเลือกรายการและคำนวณเงิน")
+# =========================
+# ✏️ แก้ชื่ออาหารตรงนี้
+# =========================
+names = [
+    "ลาบแซลมอน",
+    "ซูชิข้าวคลุกกะปิไข่ชะอม",
+    "พิซซ่าหน้ากะเพรา",
+    "เกี๊ยวซ่ากุ้งผัดไทย",
+    "สปาเกตตี้ผัดต้มยำกุ้ง",
+    "มักกะโรนี",
+    "ชื่ออาหาร 7",
+    "ชื่ออาหาร 8",
+    "ชื่ออาหาร 9",
+    "ชื่ออาหาร 10"
+]
 
-# กำหนดราคาสินค้า/บริการตั้งต้น
-menu_prices = {
-    "เครปไข่เจียว ราคา 35 บาท": 35,
-    "ซุปไข่ข้นมะเขือเทศ ราคา 40 บาท": 40,
-    "ไข่ตุ๋นเนื้อหมูเด้ง ราคา 40 บาท": 40,
-    "ไข่ลูกเขยระเบิด ราคา 40 บาท": 39,
-}
 
-# ใช้ st.session_state เพื่อเก็บบันทึกรายการที่เลือกเพิ่มได้หลายครั้ง
-if "selected_items" not in st.session_state:
-    st.session_state.selected_items = []
+# =========================
+# 💰 แก้ราคาตรงนี้
+# =========================
+prices = [
+    "99 บาท",
+    "69 บาท",
+    "129 บาท",
+    "89 บาท",
+    "109 บาท",
+    "99 บาท",
+    "79 บาท",
+    "89 บาท",
+    "69 บาท",
+    "99 บาท"
+]
 
-# ฟังก์ชันเพิ่มรายการ
-def add_item():
-    item = st.session_state.new_item
-    price = menu_prices[item]
-    st.session_state.selected_items.append({"item": item, "price": price})
 
-# ฟังก์ชันล้างข้อมูล
-def clear_all():
-    st.session_state.selected_items = []
+# =========================
+# 🖼️ ใส่ลิงก์รูปตรงนี้
+# ต้องเป็น Direct Image URL
+# เช่น .jpg / .png / .webp
+# =========================
+images = [
+    "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
+    "https://static.amarintv.com/images/upload/editor/source/IceZ/food/ep68/B3/3x7a8158.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaWIj-LU2P70X1TQmzebIudzBS0kFBAelAHYnpwzar6o7Fl85aoo-UfY&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ6qSVMBe67temGrfV0TwKwnvXxoPjf9Uw7ZbrhdJbg&s=10",
+    "https://www.pholfoodmafia.com/wp-content/uploads/2022/07/SpaTumYum1000.jpg",
+    "ใส่ลิงก์รูปที่ 6",
+    "ใส่ลิงก์รูปที่ 7",
+    "ใส่ลิงก์รูปที่ 8",
+    "ใส่ลิงก์รูปที่ 9",
+    "ใส่ลิงก์รูปที่ 10"
+]
 
-# ส่วนเลือกรายการ (เลือกซ้ำได้โดยการกดเพิ่มทีละครั้ง)
-st.selectbox("เลือกรายการที่ต้องการ (เลือกซ้ำได้)", list(menu_prices.keys()), key="new_item")
-st.button("➕ เพิ่มรายการนี้", on_click=add_item)
 
-st.divider()
+# =========================
+# ฟังก์ชันโหลดรูป
+# =========================
+def get_image(url):
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
 
-# แสดงรายการที่เลือกทั้งหมด
-st.subheader("📋 รายการที่คุณเลือก:")
-if st.session_state.selected_items:
-    total_price = 0
-    for i, entry in enumerate(st.session_state.selected_items):
-        col1, col2 = st.columns([3, 1])
-        col1.write(f"{i+1}. {entry['item']}")
-        col2.write(f"{entry['price']:,.2f} บาท")
-        total_price += entry['price']
-    
-    st.divider()
-    st.markdown(h2 := f"### *ยอดรวมทั้งหมด: {total_price:,.2f} บาท*")
-    st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all)
-else:
-    st.info("ยังไม่มีรายการถูกเลือก กรุณากดเพิ่มรายการด้านบน")
+        image = Image.open(
+            BytesIO(response.content)
+        ).convert("RGB")
+
+        # ทำให้รูปทุกใบมีขนาดเท่ากัน
+        image = ImageOps.fit(
+            image,
+            (180, 180)
+        )
+
+        return image
+
+    except:
+        return None
+
+
+# =========================
+# แสดงอาหาร 5 คอลัมน์
+# =========================
+for row in range(0, len(images), 5):
+
+    columns = st.columns(5)
+
+    for col, i in zip(
+        columns,
+        range(row, min(row + 5, len(images)))
+    ):
+
+        with col:
+
+            # =========================
+            # รูป
+            # =========================
+            image = get_image(images[i])
+
+            if image is not None:
+                st.markdown(
+                    f"""
+                    <div style="
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                    ">
+                        <img src="{images[i]}"
+                            style="
+                                width:180px;
+                                height:180px;
+                                object-fit:cover;
+                                display:block;
+                            ">
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+            else:
+                st.markdown(
+                    """
+                    <div style="
+                        width:180px;
+                        height:180px;
+                        border:1px solid #ddd;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        margin:auto;
+                        color:#999;
+                    ">
+                        ใส่รูปตรงนี้
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+            # =========================
+            # ชื่ออาหาร
+            # =========================
+            st.markdown(
+                f"""
+                <div style="
+                    text-align:center;
+                    font-size:16px;
+                    font-weight:bold;
+                    margin-top:8px;
+                ">
+                    {names[i]}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            # =========================
+            # ราคา
+            # =========================
+            st.markdown(
+                f"""
+                <div style="
+                    text-align:center;
+                    font-size:15px;
+                    margin-top:4px;
+                ">
+                    {prices[i]}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
