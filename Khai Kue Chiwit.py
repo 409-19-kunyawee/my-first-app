@@ -145,6 +145,16 @@ prices = [
     "79 บาท",
     "89 บาท",
     "69 บาท",
+    "99 บาท",
+    "99 บาท",
+    "69 บาท",
+    "129 บาท",
+    "89 บาท",
+    "109 บาท",
+    "99 บาท",
+    "79 บาท",
+    "89 บาท",
+    "69 บาท",
     "99 บาท"
 ]
 
@@ -155,6 +165,16 @@ prices = [
 # เช่น .jpg / .png / .webp
 # =========================
 images = [
+    "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
+    "https://static.amarintv.com/images/upload/editor/source/IceZ/food/ep68/B3/3x7a8158.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaWIj-LU2P70X1TQmzebIudzBS0kFBAelAHYnpwzar6o7Fl85aoo-UfY&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ6qSVMBe67temGrfV0TwKwnvXxoPjf9Uw7ZbrhdJbg&s=10",
+    "https://www.pholfoodmafia.com/wp-content/uploads/2022/07/SpaTumYum1000.jpg",
+    "ใส่ลิงก์รูปที่ 6",
+    "ใส่ลิงก์รูปที่ 7",
+    "ใส่ลิงก์รูปที่ 8",
+    "ใส่ลิงก์รูปที่ 9",
+    "ใส่ลิงก์รูปที่ 10",
     "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
     "https://static.amarintv.com/images/upload/editor/source/IceZ/food/ep68/B3/3x7a8158.jpg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaWIj-LU2P70X1TQmzebIudzBS0kFBAelAHYnpwzar6o7Fl85aoo-UfY&s=10",
