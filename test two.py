@@ -55,8 +55,8 @@ prices = [
 # =========================
 images = [
     "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
-    "ใส่ลิงก์รูปที่ 2",
-    "ใส่ลิงก์รูปที่ 3",
+    "https://static.amarintv.com/images/upload/editor/source/IceZ/food/ep68/B3/3x7a8158.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaWIj-LU2P70X1TQmzebIudzBS0kFBAelAHYnpwzar6o7Fl85aoo-UfY&s=10",
     "ใส่ลิงก์รูปที่ 4",
     "ใส่ลิงก์รูปที่ 5",
     "ใส่ลิงก์รูปที่ 6",
