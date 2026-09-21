@@ -1,4 +1,4 @@
-from tabulate import tabulate
+import tabulate
 
 # assign data
 a = [
