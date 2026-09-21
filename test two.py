@@ -23,7 +23,7 @@ for row in range(3):
     "https://www.pholfoodmafia.com/wp-content/uploads/2020/04/1Salmon-Larb.jpg",
     "https://apimain.kleensstation.com/images/1695562648.jpg"
                      ]
-
+            st.image(images[i], use_container_width=True)
             st.markdown(
                 f"""
                 <div style="
