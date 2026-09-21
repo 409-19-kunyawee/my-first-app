@@ -102,18 +102,6 @@ st.markdown(
 )
 
 
-# =========================================
-# 🍽️ MENU
-# =========================================
-st.markdown(
-    """
-    <div class="menu-title">
-        🍽️ MENU
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 st.title("🍽️ MENU")
 
 
