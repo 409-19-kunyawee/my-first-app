@@ -94,9 +94,6 @@ def get_image(url):
     except:
         return None
 
-
-# แทนที่ส่วนแสดงอาหาร 5 คอลัมน์เดิมด้วยโค้ดชุดนี้
-
 st.divider()
 
 # ใช้ expander เพื่อซ่อนเมนู
@@ -118,6 +115,28 @@ with st.expander("📖 **คลิกที่นี่เพื่อดูร�
                         """,
                         unsafe_allow_html=True
                     )
+                else:
+                    st.markdown(
+                        """
+                        <div style="width:180px; height:180px; border:1px solid #ddd; display:flex; align-items:center; justify-content:center; margin:auto; color:#999;">
+                            ใส่รูปตรงนี้
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+                # =========================
+                # ชื่ออาหาร & ราคา
+                # =========================
+                st.markdown(
+                    f"""
+                    <div style="text-align:center; font-size:16px; font-weight:bold; margin-top:8px;">{names[i]}</div>
+                    <div style="text-align:center; font-size:15px; margin-top:4px; color:#555;">{prices[i]}</div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+st.divider()
                 else:
                     st.markdown(
                         """
