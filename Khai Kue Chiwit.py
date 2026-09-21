@@ -276,7 +276,7 @@ for row in range(0, len(images), 5):
 st.divider()
 
 with st.container(border=True):
-    st.subheader("# :red[คำนวนค่าด้ชนีมวลกาย BMI]")
+    st.subheader(" :red[ส่วนลดของทางร้าน]")
     st.write("- ซื้อครบ 300 บาท ลด 10%")
     st.write("- ซื้อครบ 500 บาท ลด 20%")
     
