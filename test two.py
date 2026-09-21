@@ -1,13 +1,14 @@
 from tabulate import tabulate
 
-# เตรียมข้อมูลหัวตารางและเนื้อหา
-data = [
-    ["John", 25, "Thailand"],
-    ["Alice", 30, "USA"],
-    ["Bob", 22, "Japan"]
+# assign data
+a = [
+    ["Nikhil", "Delhi"], 
+    ["Ravi", "Kanpur"], 
+    ["Manish", "Ahmedabad"], 
+    ["Prince", "Bangalore"]
 ]
 
-headers = ["Name", "Age", "Country"]
+# create header
+headers = ["Name", "City"]
 
-# สั่งพิมพ์ตารางรูปแบบ grid
-print(tabulate(data, headers=headers, tablefmt="grid"))
+print(tabulate(a, headers=headers, tablefmt="grid"))
