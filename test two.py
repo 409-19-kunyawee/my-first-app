@@ -57,7 +57,7 @@ def get_image(url):
 
         # ทำให้ทุกภาพเป็นขนาด 600 x 400
         image = image.convert("RGB")
-        image.thumbnail((100, 200))
+        image.thumbnail((600, 400))
 
         return image
 
@@ -88,7 +88,7 @@ for row in range(3):
             if image is not None:
                 st.image(
                     image,
-                    width="stretch"
+                    width=180
                 )
             else:
                 st.info("ใส่ลิงก์รูปตรงนี้")
