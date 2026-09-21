@@ -2,18 +2,18 @@ import streamlit as st
 from collections import Counter
 from datetime import datetime
 
-# ส่วนที่ 1: ส่วนหัวและเมนูร้าน (โค้ดเดิมของคุณ)
+# ส่วนที่ 1: ส่วนหัวและเมนูร้าน
 st.markdown("# :orange[🍳 Khai Kue Chiwit 🍴]")
 
 st.divider()
 with st.container(border=True):
     st.subheader("📦 เมนูคนชอบข่าย")
-    st.write("- ลาบแซลมอน  99 บาท")
-    st.write("- ซูชิข้าวคลุกกะปิไข่ชะอม  69 บาท")
-    st.write("- พิซซ่าหน้ากะเพรา  129 บาท")
-    st.write("- เกี๊ยวซ่ากุ้งผัดไทย  89 บาท")
+    st.write("- ลาบแซลมอน 99 บาท")
+    st.write("- ซูชิข้าวคลุกกะปิไข่ชะอม 69 บาท")
+    st.write("- พิซซ่าหน้ากะเพรา 129 บาท")
+    st.write("- เกี๊ยวซ่ากุ้งผัดไทย 89 บาท")
     st.write("- สปาเกตตี้ผัดต้มยำกุ้ง 99 บาท")
-    st.write("- ซูชิข้าวเหนียวไก่ย่างจิ้มแจ่ว 69บาท")
+    st.write("- ซูชิข้าวเหนียวไก่ย่างจิ้มแจ่ว 69 บาท")
     st.write("- เปาะเปี๊ยะส้มตำ 69 บาท ")
     st.write("- ขนมควยลิง 39 บาท")
     st.write("- ขนมพระพาย 45 บาท")
@@ -27,20 +27,17 @@ with st.container(border=True):
     st.write("- สตรอว์เบอร์รี่มะม่วงอกร่อง 55 บาท")
     st.write("- น้ำเปล่า 15 บาท")
     st.write("- น้ำแข็ง 1 ถัง 10 บาท")
+
 with st.container(border=True):
     st.subheader("ส่วนลดของทางร้าน")
     st.write("- ซื้อครบ 300 บาท ลด 10%")
-    st.write("- ซื้อครบ 500 บาท ลด 20% ")
+    st.write("- ซื้อครบ 500 บาท ลด 20%")
     
 st.divider()
 st.title("ระบบเลือกรายการและคำนวณเงิน")
 
 # กำหนดราคาสินค้า/บริการตั้งต้น
 menu_prices = {
-    "ลาบแซลมอน": 99,
-    "ซูชิข้าวคลุกกะปิไข่ชะอม": 69,
-    "พิซซ่าหน้ากะเพรา": 129,
-    "เกี๊ยวซ่ากุ้งผัดไทย": 89,
     "ลาบแซลมอน": 99,
     "ซูชิข้าวคลุกกะปิไข่ชะอม": 69,
     "พิซซ่าหน้ากะเพรา": 129,
@@ -63,30 +60,51 @@ menu_prices = {
     "น้ำแข็ง 1 ถัง": 10,
 }
 
-# ใช้ st.session_state เพื่อเก็บบันทึกรายการที่เลือกเพิ่มได้หลายครั้ง
+# กำหนด Session State
 if "selected_items" not in st.session_state:
     st.session_state.selected_items = []
+
+if "show_receipt" not in st.session_state:
+    st.session_state.show_receipt = False
 
 # ฟังก์ชันเพิ่มรายการ
 def add_item():
     item = st.session_state.new_item
     price = menu_prices[item]
     st.session_state.selected_items.append({"item": item, "price": price})
+    st.session_state.show_receipt = False  # ซ่อนใบเสร็จชั่วคราวเมื่อมีการกดเพิ่มเมนูใหม่
+
+# ฟังก์ชันทำใบเสร็จ
+def generate_receipt():
+    if st.session_state.selected_items:
+        st.session_state.show_receipt = True
+    else:
+        st.warning("กรุณาเลือกรายการสินค้าอย่างน้อย 1 รายการก่อนออกใบเสร็จ")
 
 # ฟังก์ชันล้างข้อมูล
 def clear_all():
     st.session_state.selected_items = []
+    st.session_state.show_receipt = False
 
-# ส่วนเลือกรายการ (เลือกซ้ำได้โดยการกดเพิ่มทีละครั้ง)
+# ส่วนเลือกรายการ
 st.selectbox("เลือกรายการที่ต้องการ (เลือกซ้ำได้)", list(menu_prices.keys()), key="new_item")
-st.button("➕ เพิ่มรายการนี้", on_click=add_item)
 
-# ส่วนที่ 2: แสดงผลในรูปแบบใบเสร็จรับเงิน (Receipt Layout)
-# 
+col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
+with col_btn1:
+    st.button("➕ เพิ่มรายการนี้", on_click=add_item, use_container_width=True)
+with col_btn2:
+    st.button("📄 ออกใบเสร็จรับเงิน", on_click=generate_receipt, type="primary", use_container_width=True)
+with col_btn3:
+    st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all, use_container_width=True)
+
+# สรุปรายการที่เลือกไว้คร่าวๆ ก่อนออกใบเสร็จ
+if st.session_state.selected_items:
+    st.caption(f"🛒 รายการที่เลือกไว้ขณะนี้: {len(st.session_state.selected_items)} ชิ้น")
 
 st.divider()
 
-if st.session_state.selected_items:
+# ส่วนที่ 2: แสดงผลในรูปแบบใบเสร็จรับเงิน ( Receipt Layout )
+if st.session_state.show_receipt and st.session_state.selected_items:
     # 1. รวบรวมนับจำนวนรายการสินค้าที่สั่งซ้ำ
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
     
@@ -111,9 +129,9 @@ if st.session_state.selected_items:
 
         # หัวตารางใบเสร็จ
         col1, col2, col3 = st.columns([3, 1, 1.5])
-        col1.write("*รายการ*")
-        col2.write("*จำนวน*")
-        col3.write("*จำนวนเงิน*")
+        col1.write("รายการ")
+        col2.write("จำนวน")
+        col3.write("จำนวนเงิน")
         st.text("-" * 45)
 
         # รายการสินค้า
@@ -129,13 +147,13 @@ if st.session_state.selected_items:
         st.text("=" * 45)
         
         # สรุปยอดเงิน
-        st.write(f"*รวมเป็นเงิน (Subtotal):* {subtotal:,.2f} บาท")
+        st.write(f"รวมเป็นเงิน (Subtotal): {subtotal:,.2f} บาท")
         if discount_percent > 0:
-            st.write(f"*ส่วนลด ({discount_percent}%):* -{discount_amount:,.2f} บาท")
+            st.write(f"ส่วนลด ({discount_percent}%): -{discount_amount:,.2f} บาท")
         else:
-            st.write("*ส่วนลด:* 0.00 บาท")
+            st.write("ส่วนลด: 0.00 บาท")
             
-        st.markdown(f"### *ยอดชำระสุทธิ (NET TOTAL):* :green[{total_price:,.2f} บาท]")
+        st.markdown(f"### ยอดชำระสุทธิ (NET TOTAL): :green[{total_price:,.2f} บาท]")
         st.text("=" * 45)
         st.markdown("<p style='text-align: center;'>🙏 ขอบคุณที่อุดหนุนครับ/ค่ะ 🙏</p>", unsafe_allow_html=True)
 
@@ -145,7 +163,4 @@ if st.session_state.selected_items:
     elif subtotal < 500:
         st.info(f"🎉 ได้รับส่วนลด 10% แล้ว! (ซื้อเพิ่มอีก {500 - subtotal:,.2f} บาท เพื่อรับส่วนลด 20%)")
     else:
-        st.success("🔥 คุณได้รับส่วนลดสูงสุด 20% เรียบร้อยแล้ว!")
-
-    # ปุ่มล้างรายการ
-    st.button("🗑️ ล้างรายการสั่งซื้อทั้งหมด", on_click=clear_all, type="primary")
+        st.success("🎉 คุณได้รับส่วนลดสูงสุด 20% แล้ว!")
