@@ -130,6 +130,7 @@ if st.session_state.selected_items:
 
            if st.button("🧾 ออกใบเสร็จและคำนวณเงิน", type="primary", use_container_width=True):
         st.session_state.calc = True
+        
         # สรุปยอดเงิน
         st.write(f"*รวมเป็นเงิน (Subtotal):* {subtotal:,.2f} บาท")
         if discount_percent > 0:
