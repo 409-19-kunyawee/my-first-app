@@ -72,16 +72,37 @@ def add_item():
     item = st.session_state.new_item
     price = menu_prices[item]
     st.session_state.selected_items.append({"item": item, "price": price})
-    st.session_state.show_receipt = False  # ซ่อนใบเสร็จชั่วคราวเมื่อมีการกดเพิ่มเมนูใหม่
+    st.session_state.show_receipt = False
 
-# ฟังก์ชันทำใบเสร็จ
+# ฟังก์ชันเพิ่มจำนวนสินค้าเฉพาะรายการ
+def increment_item(item_name):
+    price = menu_prices[item_name]
+    st.session_state.selected_items.append({"item": item_name, "price": price})
+    st.session_state.show_receipt = False
+
+# ฟังก์ชันลดจำนวนสินค้าเฉพาะรายการ
+def decrement_item(item_name):
+    for i in range(len(st.session_state.selected_items) - 1, -1, -1):
+        if st.session_state.selected_items[i]["item"] == item_name:
+            st.session_state.selected_items.pop(i)
+            break
+    st.session_state.show_receipt = False
+
+# ฟังก์ชันลบรายการสินค้านั้นๆ ทั้งหมด
+def remove_all_of_item(item_name):
+    st.session_state.selected_items = [
+        item for item in st.session_state.selected_items if item["item"] != item_name
+    ]
+    st.session_state.show_receipt = False
+
+# ฟังก์ชันออกใบเสร็จ
 def generate_receipt():
     if st.session_state.selected_items:
         st.session_state.show_receipt = True
     else:
         st.warning("กรุณาเลือกรายการสินค้าอย่างน้อย 1 รายการก่อนออกใบเสร็จ")
 
-# ฟังก์ชันล้างข้อมูล
+# ฟังก์ชันล้างข้อมูลทั้งหมด
 def clear_all():
     st.session_state.selected_items = []
     st.session_state.show_receipt = False
@@ -97,6 +118,9 @@ with col_btn2:
 with col_btn3:
     st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all, use_container_width=True)
 
+# ----------------------------------------------------
+# ส่วนที่เพิ่มเข้ามา: แสดงรายการสินค้าที่เลือกไว้พร้อมจำนวน
+# ----------------------------------------------------
 if st.session_state.selected_items:
     st.markdown("### 🛒 รายการที่สั่งไว้ขณะนี้")
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
@@ -104,10 +128,10 @@ if st.session_state.selected_items:
     with st.container(border=True):
         # หัวตารางรายการสั่งซื้อ
         head_c1, head_c2, head_c3, head_c4 = st.columns([3, 1.5, 2, 1])
-        head_c1.write("*รายการ*")
-        head_c2.write("*ราคา/ชิ้น*")
-        head_c3.write("*จำนวน*")
-        head_c4.write("*จัดการ*")
+        head_c1.write("**รายการ**")
+        head_c2.write("**ราคา/ชิ้น**")
+        head_c3.write("**จำนวน**")
+        head_c4.write("**จัดการ**")
         st.divider()
 
         # รายละเอียดแต่ละรายการ
@@ -121,7 +145,7 @@ if st.session_state.selected_items:
             with c3:
                 btn_c1, btn_c2, btn_c3 = st.columns([1, 1.5, 1])
                 btn_c1.button("➖", key=f"dec_{item_name}", on_click=decrement_item, args=(item_name,))
-                btn_c2.write(f"*{count}*")
+                btn_c2.write(f"**{count}**")
                 btn_c3.button("➕", key=f"inc_{item_name}", on_click=increment_item, args=(item_name,))
             
             # ปุ่มลบรายการทั้งหมด
@@ -129,12 +153,9 @@ if st.session_state.selected_items:
 
 st.divider()
 
-# ส่วนที่ 2: แสดงผลในรูปแบบใบเสร็จรับเงิน ( Receipt Layout )
+# ส่วนที่ 2: แสดงผลในรูปแบบใบเสร็จรับเงิน (Receipt Layout)
 if st.session_state.show_receipt and st.session_state.selected_items:
-    # 1. รวบรวมนับจำนวนรายการสินค้าที่สั่งซ้ำ
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
-    
-    # 2. คำนวณราคารวม ส่วนลด และยอดสุทธิ
     subtotal = sum(item["price"] for item in st.session_state.selected_items)
     
     discount_percent = 0
@@ -146,7 +167,7 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     discount_amount = subtotal * (discount_percent / 100)
     total_price = subtotal - discount_amount
 
-    # 3. แสดงผลตัวใบเสร็จ (สไตล์ Receipt Box)
+    # แสดงผลตัวใบเสร็จ (สไตล์ Receipt Box)
     with st.container(border=True):
         st.markdown("<h3 style='text-align: center;'>🧾 ใบเสร็จรับเงิน / RECEIPT</h3>", unsafe_allow_html=True)
         st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้าน Khai Kue Chiwit</h4>", unsafe_allow_html=True)
@@ -155,9 +176,9 @@ if st.session_state.show_receipt and st.session_state.selected_items:
 
         # หัวตารางใบเสร็จ
         col1, col2, col3 = st.columns([3, 1, 1.5])
-        col1.write("รายการ")
-        col2.write("จำนวน")
-        col3.write("จำนวนเงิน")
+        col1.write("*รายการ*")
+        col2.write("*จำนวน*")
+        col3.write("*จำนวนเงิน*")
         st.text("-" * 45)
 
         # รายการสินค้า
@@ -173,11 +194,11 @@ if st.session_state.show_receipt and st.session_state.selected_items:
         st.text("=" * 45)
         
         # สรุปยอดเงิน
-        st.write(f"รวมเป็นเงิน (Subtotal): {subtotal:,.2f} บาท")
+        st.write(f"*รวมเป็นเงิน (Subtotal):* {subtotal:,.2f} บาท")
         if discount_percent > 0:
-            st.write(f"ส่วนลด ({discount_percent}%): -{discount_amount:,.2f} บาท")
+            st.write(f"*ส่วนลด ({discount_percent}%):* -{discount_amount:,.2f} บาท")
         else:
-            st.write("ส่วนลด: 0.00 บาท")
+            st.write("*ส่วนลด:* 0.00 บาท")
             
         st.markdown(f"### ยอดชำระสุทธิ (NET TOTAL): :green[{total_price:,.2f} บาท]")
         st.text("=" * 45)
