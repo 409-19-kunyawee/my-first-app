@@ -20,8 +20,8 @@ for row in range(3):
         with col:
 
             st.image(
-                f"images/photo{i + 1}.jpg",
-                use_container_width=True
+    "https://www.lemon8-app.com/@monmon_kamolrat/7557368075134222856?region=th",
+    use_container_width=True
             )
 
             st.markdown(
