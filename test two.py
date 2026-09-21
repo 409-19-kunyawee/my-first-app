@@ -58,7 +58,7 @@ images = [
     "https://static.amarintv.com/images/upload/editor/source/IceZ/food/ep68/B3/3x7a8158.jpg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaWIj-LU2P70X1TQmzebIudzBS0kFBAelAHYnpwzar6o7Fl85aoo-UfY&s=10",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ6qSVMBe67temGrfV0TwKwnvXxoPjf9Uw7ZbrhdJbg&s=10",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhWgXq5lMn5pAjvuc0Nvm14ZI8CoxH5bkM4VENsxndJw&s=10",
+    "https://www.pholfoodmafia.com/wp-content/uploads/2022/07/SpaTumYum1000.jpg",
     "ใส่ลิงก์รูปที่ 6",
     "ใส่ลิงก์รูปที่ 7",
     "ใส่ลิงก์รูปที่ 8",
