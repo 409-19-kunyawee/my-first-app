@@ -439,7 +439,7 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     # แสดงผลตัวใบเสร็จ (สไตล์ Receipt Box)
     with st.container(border=True):
         st.markdown("<h3 style='text-align: center;'>🧾 ใบเสร็จรับเงิน / RECEIPT</h3>", unsafe_allow_html=True)
-        st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้าน Khai Kue Chiwit</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้านนี้อร่อยทุกอย่าง</h4>", unsafe_allow_html=True)
         st.caption(f"วันที่-เวลา: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
         st.text("-" * 45)
 
