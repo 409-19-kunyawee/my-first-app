@@ -10,10 +10,6 @@ st.set_page_config(
     layout="wide"
 )
 
-
-# =========================================
-# 🎀 ชื่อร้าน & สไตล์ CSS
-# =========================================
 st.markdown(
     """
     <style>
@@ -72,10 +68,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# =========================================
-# 🏪 ชื่อร้าน
-# =========================================
 st.markdown(
     """
     <div class="shop-title">
@@ -85,10 +77,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# =========================================
-# คำอธิบายร้าน
-# =========================================
 st.markdown(
     """
     <div class="shop-subtitle">
@@ -101,10 +89,6 @@ st.markdown(
 
 st.title("🍽️ MENU")
 
-
-# =========================
-# ✏️ แก้ชื่ออาหารตรงนี้
-# =========================
 names = [
     "ลาบแซลมอน",
     "ซูชิข้าวคลุกกะปิไข่ชะอม",
@@ -128,10 +112,6 @@ names = [
     "น้ำแข็ง 1 ถัง"
 ]
 
-
-# =========================
-# 💰 แก้ราคาตรงนี้
-# =========================
 prices = [
     "99 บาท",
     "69 บาท",
@@ -155,12 +135,6 @@ prices = [
     "10 บาท"
 ]
 
-
-# =========================
-# 🖼️ ใส่ลิงก์รูปตรงนี้
-# ต้องเป็น Direct Image URL
-# เช่น .jpg / .png / .webp
-# =========================
 images = [
     "https://i.pinimg.com/736x/cb/5d/51/cb5d510c28e4a575d45f511beaad0b83.jpg",
     "https://static.amarintv.com/images/upload/editor/source/IceZ/food/ep68/B3/3x7a8158.jpg",
@@ -184,10 +158,6 @@ images = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD4EcUUwtKf4r6VeIaHJEnbehIc1YKFr5GgDHQlqAlTg&s=10"
 ]
 
-
-# =========================
-# ฟังก์ชันโหลดรูป
-# =========================
 def get_image(url):
     try:
         response = requests.get(url, timeout=10)
@@ -208,10 +178,6 @@ def get_image(url):
     except:
         return None
 
-
-# =========================
-# แสดงอาหารแบบซ่อน/ขยาย (Expander)
-# =========================
 with st.expander("📖 **คลิกที่นี่เพื่อเปิด/ปิด ดูรายการเมนูและรูปอาหารทั้งหมด**", expanded=False):
     for row in range(0, len(images), 5):
 
@@ -224,9 +190,6 @@ with st.expander("📖 **คลิกที่นี่เพื่อเปิ�
 
             with col:
 
-                # =========================
-                # รูป
-                # =========================
                 image = get_image(images[i])
 
                 if image is not None:
@@ -268,9 +231,6 @@ with st.expander("📖 **คลิกที่นี่เพื่อเปิ�
                         unsafe_allow_html=True
                     )
 
-                # =========================
-                # ชื่ออาหาร
-                # =========================
                 st.markdown(
                     f"""
                     <div class="food-name">
@@ -280,9 +240,6 @@ with st.expander("📖 **คลิกที่นี่เพื่อเปิ�
                     unsafe_allow_html=True
                 )
 
-                # =========================
-                # ราคา
-                # =========================
                 st.markdown(
                     f"""
                     <div class="food-price">
@@ -302,7 +259,6 @@ with st.container(border=True):
 st.divider()
 st.title("ระบบเลือกรายการและคำนวณเงิน")
 
-# กำหนดราคาสินค้า/บริการตั้งต้น
 menu_prices = {
     "ลาบแซลมอน": 99,
     "ซูชิข้าวคลุกกะปิไข่ชะอม": 69,
@@ -326,27 +282,23 @@ menu_prices = {
     "น้ำแข็ง 1 ถัง": 10,
 }
 
-# กำหนด Session State
 if "selected_items" not in st.session_state:
     st.session_state.selected_items = []
 
 if "show_receipt" not in st.session_state:
     st.session_state.show_receipt = False
 
-# ฟังก์ชันเพิ่มรายการ
 def add_item():
     item = st.session_state.new_item
     price = menu_prices[item]
     st.session_state.selected_items.append({"item": item, "price": price})
     st.session_state.show_receipt = False
 
-# ฟังก์ชันเพิ่มจำนวนสินค้าเฉพาะรายการ
 def increment_item(item_name):
     price = menu_prices[item_name]
     st.session_state.selected_items.append({"item": item_name, "price": price})
     st.session_state.show_receipt = False
 
-# ฟังก์ชันลดจำนวนสินค้าเฉพาะรายการ
 def decrement_item(item_name):
     for i in range(len(st.session_state.selected_items) - 1, -1, -1):
         if st.session_state.selected_items[i]["item"] == item_name:
@@ -354,26 +306,22 @@ def decrement_item(item_name):
             break
     st.session_state.show_receipt = False
 
-# ฟังก์ชันลบรายการสินค้านั้นๆ ทั้งหมด
 def remove_all_of_item(item_name):
     st.session_state.selected_items = [
         item for item in st.session_state.selected_items if item["item"] != item_name
     ]
     st.session_state.show_receipt = False
 
-# ฟังก์ชันออกใบเสร็จ
 def generate_receipt():
     if st.session_state.selected_items:
         st.session_state.show_receipt = True
     else:
         st.warning("กรุณาเลือกรายการสินค้าอย่างน้อย 1 รายการก่อนออกใบเสร็จ")
 
-# ฟังก์ชันล้างข้อมูลทั้งหมด
 def clear_all():
     st.session_state.selected_items = []
     st.session_state.show_receipt = False
 
-# ส่วนเลือกรายการ
 st.selectbox("เลือกรายการที่ต้องการ (เลือกซ้ำได้)", list(menu_prices.keys()), key="new_item")
 
 col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
@@ -384,15 +332,12 @@ with col_btn2:
 with col_btn3:
     st.button("🗑️ ล้างรายการทั้งหมด", on_click=clear_all, use_container_width=True)
 
-# ----------------------------------------------------
-# ส่วนที่เพิ่มเข้ามา: แสดงรายการสินค้าที่เลือกไว้พร้อมจำนวน
-# ----------------------------------------------------
 if st.session_state.selected_items:
     st.markdown("### 🛒 รายการที่สั่งไว้ขณะนี้")
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
     
     with st.container(border=True):
-        # หัวตารางรายการสั่งซื้อ
+
         head_c1, head_c2, head_c3, head_c4 = st.columns([3, 1.5, 2, 1])
         head_c1.write("**รายการ**")
         head_c2.write("**ราคา/ชิ้น**")
@@ -400,26 +345,22 @@ if st.session_state.selected_items:
         head_c4.write("**จัดการ**")
         st.divider()
 
-        # รายละเอียดแต่ละรายการ
         for item_name, count in item_counts.items():
             unit_price = menu_prices[item_name]
             c1, c2, c3, c4 = st.columns([3, 1.5, 2, 1])
             c1.write(f"• {item_name}")
             c2.write(f"{unit_price} บาท")
             
-            # ปุ่มเพิ่ม-ลดจำนวนในแถวเดียวกัน
             with c3:
                 btn_c1, btn_c2, btn_c3 = st.columns([1, 1.5, 1])
                 btn_c1.button("➖", key=f"dec_{item_name}", on_click=decrement_item, args=(item_name,))
                 btn_c2.write(f"**{count}**")
                 btn_c3.button("➕", key=f"inc_{item_name}", on_click=increment_item, args=(item_name,))
             
-            # ปุ่มลบรายการทั้งหมด
             c4.button("❌", key=f"del_{item_name}", on_click=remove_all_of_item, args=(item_name,))
 
 st.divider()
 
-# ส่วนที่ 2: แสดงผลในรูปแบบใบเสร็จรับเงิน (Receipt Layout)
 if st.session_state.show_receipt and st.session_state.selected_items:
     item_counts = Counter(item["item"] for item in st.session_state.selected_items)
     subtotal = sum(item["price"] for item in st.session_state.selected_items)
@@ -433,21 +374,18 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     discount_amount = subtotal * (discount_percent / 100)
     total_price = subtotal - discount_amount
 
-    # แสดงผลตัวใบเสร็จ (สไตล์ Receipt Box)
     with st.container(border=True):
         st.markdown("<h3 style='text-align: center;'>🧾 ใบเสร็จรับเงิน / RECEIPT</h3>", unsafe_allow_html=True)
         st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้านนี้อร่อยทุกอย่าง</h4>", unsafe_allow_html=True)
         st.caption(f"วันที่-เวลา: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
         st.text("-" * 45)
 
-        # หัวตารางใบเสร็จ
         col1, col2, col3 = st.columns([3, 1, 1.5])
         col1.write("*รายการ*")
         col2.write("*จำนวน*")
         col3.write("*จำนวนเงิน*")
         st.text("-" * 45)
 
-        # รายการสินค้า
         for item_name, count in item_counts.items():
             unit_price = menu_prices[item_name]
             item_total = unit_price * count
@@ -459,7 +397,6 @@ if st.session_state.show_receipt and st.session_state.selected_items:
 
         st.text("=" * 45)
         
-        # สรุปยอดเงิน
         st.write(f"*รวมเป็นเงิน (Subtotal):* {subtotal:,.2f} บาท")
         if discount_percent > 0:
             st.write(f"*ส่วนลด ({discount_percent}%):* -{discount_amount:,.2f} บาท")
@@ -470,7 +407,6 @@ if st.session_state.show_receipt and st.session_state.selected_items:
         st.text("=" * 45)
         st.markdown("<p style='text-align: center;'>🙏 ขอบคุณที่อุดหนุนครับ/ค่ะ 🙏</p>", unsafe_allow_html=True)
 
-    # แสดงคำแนะนำการรับส่วนลดเพิ่มเติม
     if subtotal < 300:
         st.info(f"💡 ซื้อเพิ่มอีก {300 - subtotal:,.2f} บาท เพื่อรับส่วนลด 10%")
     elif subtotal < 500:
