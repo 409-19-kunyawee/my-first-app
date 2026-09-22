@@ -174,7 +174,7 @@ images = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDK1yHjlNgp4MKM6RMhVKZV8C1qkS6uJw8HxqTzXna9YZ5Ay11qm80as4&s=10",
     "https://www.silpa-mag.com/wp-content/uploads/2025/05/462361480_3858581194379247_7171805448702270275_n-225x300.jpg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnFI11_JRiZ43cG1xyXAI1YBbZIj0xr2ToZLs1_0zMzw&s=10",
-    "ใส่ลิงก์รูปที่ 10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRpM5cNITEzS6iBeST5Q1BFkdjSfqgkI4AoEEUFlh6oA&s=10",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcJ6jfkg4dSaZezcABKjDhJuXBRaNKQoeg4okDtD1RA&s=10",
     "https://i.pinimg.com/736x/9b/8f/01/9b8f0165285802789d04490b0e246b9a.jpg",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSitc4p6Yn2gnZkFpaxfjWi4mT1XgDuLrT78myOQUfGuQ&s=10",
