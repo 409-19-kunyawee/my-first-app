@@ -479,4 +479,4 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     elif subtotal < 500:
         st.info(f"🎉 ได้รับส่วนลด 10% แล้ว! (ซื้อเพิ่มอีก {500 - subtotal:,.2f} บาท เพื่อรับส่วนลด 20%)")
     else:
-        st.success("🎉 คุณได้รับส่วนลดสูงสุด 20% แล้ว!"
+        st.success("🎉 คุณได้รับส่วนลดสูงสุด 20% แล้ว!")
