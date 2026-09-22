@@ -5,9 +5,6 @@ from io import BytesIO
 from collections import Counter
 from datetime import datetime
 
-# =========================================
-# ตั้งค่าหน้าเว็บ
-# =========================================
 st.set_page_config(
     page_title="อาหาร",
     layout="wide"
