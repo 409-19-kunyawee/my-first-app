@@ -114,11 +114,21 @@ names = [
     "พิซซ่าหน้ากะเพรา",
     "เกี๊ยวซ่ากุ้งผัดไทย",
     "สปาเกตตี้ผัดต้มยำกุ้ง",
-    "มักกะโรนี",
-    "ชื่ออาหาร 7",
-    "ชื่ออาหาร 8",
-    "ชื่ออาหาร 9",
-    "ชื่ออาหาร 10"
+    "ซูชิข้าวเหนียวไก่ย่างจิ้มแจ่ว",
+    "เปาะเปี๊ยะส้มตำ",
+    "ขนมควยลิง",
+    "ขนมบ้า",
+    "ขนมพระพาย",
+    "ขนมบุหลันดั้นเมฆ",
+    "ขนมผกากรอง",
+    "ขนมเสน่ห์จันทร์",
+    "ซากุระมะนาวโซดา",
+    "บลูเบอร์รีครัมเบิล โยเกิร์ตดริ๊งค์",
+    "ชาเขียวนม",
+    "ชาเย็น",
+    "สตรอว์เบอร์รี่มะม่วงอกร่อง",
+    "น้ำเปล่า",
+    "น้ำแข็ง 1 ถัง"
 ]
 
 
@@ -133,9 +143,19 @@ prices = [
     "109 บาท",
     "99 บาท",
     "79 บาท",
-    "89 บาท",
+    "39 บาท",
+    "39 บาท",
+    "45 บาท",
+    "45 บาท",
+    "45 บาท",
+    "45 บาท",
+    "49 บาท",
     "69 บาท",
-    "99 บาท"
+    "45 บาท",
+    "45 บาท",
+    "55 บาท",
+    "15 บาท",
+    "10 บาท"
 ]
 
 
@@ -150,6 +170,16 @@ images = [
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLaWIj-LU2P70X1TQmzebIudzBS0kFBAelAHYnpwzar6o7Fl85aoo-UfY&s=10",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScZ6qSVMBe67temGrfV0TwKwnvXxoPjf9Uw7ZbrhdJbg&s=10",
     "https://www.pholfoodmafia.com/wp-content/uploads/2022/07/SpaTumYum1000.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBGH3qqHnlT9zDeqxcgxxBvInjem93NFjRl_KjATdtUA&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDK1yHjlNgp4MKM6RMhVKZV8C1qkS6uJw8HxqTzXna9YZ5Ay11qm80as4&s=10",
+    "https://www.silpa-mag.com/wp-content/uploads/2025/05/462361480_3858581194379247_7171805448702270275_n-225x300.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnFI11_JRiZ43cG1xyXAI1YBbZIj0xr2ToZLs1_0zMzw&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQMYBUrRPhPWpm_i1XkZfnSDY-v5nxDR8xfohtYS3CJQ&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcJ6jfkg4dSaZezcABKjDhJuXBRaNKQoeg4okDtD1RA&s=10",
+    "https://i.pinimg.com/736x/9b/8f/01/9b8f0165285802789d04490b0e246b9a.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSitc4p6Yn2gnZkFpaxfjWi4mT1XgDuLrT78myOQUfGuQ&s=10",
+    "https://pbs.twimg.com/media/DYQDFl-W0AMBjau.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTii77PLlrL6v7Xq_v1nTbstIm5cXDfhoOCgUwBuLoabg&s",
     "ใส่ลิงก์รูปที่ 6",
     "ใส่ลิงก์รูปที่ 7",
     "ใส่ลิงก์รูปที่ 8",
@@ -268,7 +298,7 @@ with st.expander("📖 **คลิกที่นี่เพื่อเปิ�
 st.divider()
 
 with st.container(border=True):
-    st.subheader("ส่วนลดของทางร้าน")
+    st.subheader(" :red[🏷️ ส่วนลดของทางร้านค้า]")
     st.write("- ซื้อครบ 300 บาท ลด 10%")
     st.write("- ซื้อครบ 500 บาท ลด 20%")
     
@@ -282,7 +312,7 @@ menu_prices = {
     "พิซซ่าหน้ากะเพรา": 129,
     "เกี๊ยวซ่ากุ้งผัดไทย": 89,
     "สปาเกตตี้ผัดต้มยำกุ้ง": 99,
-    "ซูชิข้าวเหนียวไก่ย่างจิ้มแจ่ว": 69,
+    "ซูชิข้าวเหนียวไก่ย่างจิ้มแจ่ว": 79,
     "เปาะเปี๊ยะส้มตำ": 69,
     "ขนมควยลิง": 39,
     "ขนมบ้า": 39,
@@ -291,7 +321,7 @@ menu_prices = {
     "ขนมผกากรอง": 45,
     "ขนมเสน่ห์จันทร์": 45,
     "ซากุระมะนาวโซดา": 49,
-    "บลูเบอร์รีครัมเบิล โยเกิร์ตดริ๊งค์": 59,
+    "บลูเบอร์รีครัมเบิล โยเกิร์ตดริ๊งค์": 69,
     "ชาเขียวนม": 45,
     "ชาเย็น": 45,
     "สตรอว์เบอร์รี่มะม่วงอกร่อง": 55,
@@ -409,7 +439,7 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     # แสดงผลตัวใบเสร็จ (สไตล์ Receipt Box)
     with st.container(border=True):
         st.markdown("<h3 style='text-align: center;'>🧾 ใบเสร็จรับเงิน / RECEIPT</h3>", unsafe_allow_html=True)
-        st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้าน Khai Kue Chiwit</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: center; color: #FF8C00;'>ร้านนี้อร่อยทุกอย่าง</h4>", unsafe_allow_html=True)
         st.caption(f"วันที่-เวลา: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
         st.text("-" * 45)
 
@@ -449,4 +479,4 @@ if st.session_state.show_receipt and st.session_state.selected_items:
     elif subtotal < 500:
         st.info(f"🎉 ได้รับส่วนลด 10% แล้ว! (ซื้อเพิ่มอีก {500 - subtotal:,.2f} บาท เพื่อรับส่วนลด 20%)")
     else:
-        st.success("🎉 คุณได้รับส่วนลดสูงสุด 20% แล้ว!")
+        st.success("🎉 คุณได้รับส่วนลดสูงสุด 20% แล้ว!"
